@@ -53,6 +53,7 @@ module.exports = {
     })
   },
 
+
   /**
    * 
    * @param {import('sequelize').QueryInterface} queryInterface 

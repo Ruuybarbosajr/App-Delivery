@@ -1,5 +1,4 @@
-const userCreate = require('../services/register')
-// const User = require('../database/models/User');
+const { userCreate } = require('../services/register.service');
 
 const registerUser = async (req, res, _next) => {
     try {

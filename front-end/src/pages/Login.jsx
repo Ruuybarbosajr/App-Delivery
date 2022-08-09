@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const axios = require('axios');
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [error, setError] = useState('');
+  const [erro, setErro] = useState(false);
+  const [messageError, setMessageError] = useState('');
+  const [roles, setRoles] = useState('');
 
   const emailRegex = /\S+@\S+\.\S+/;
   const validEmail = emailRegex.test(email);
@@ -15,13 +18,18 @@ function Login() {
 
   const submit = async () => {
     try {
-      const login = await axios.post('http://localhost:3001/login', {
+      const login = await axios.post('http://localhost:3002/login', {
         email,
         password,
       });
-      console.log(login);
+      const { role } = login.data;
+      if (role === 'customer') setRoles('customer');
+      if (role === 'seller') setRoles('seller');
+      if (role === 'administrator') setRoles('administrator');
     } catch (error) {
-      console.log(error);
+      setErro(true);
+      const { message } = error.response.data;
+      setMessageError(message);
     }
   };
 
@@ -52,19 +60,28 @@ function Login() {
         </label>
 
         <button
-          type="submit"
+          type="button"
           data-testid="common_login__button-login"
           disabled={ disable }
           onClick={ () => submit() }
         >
           Login
         </button>
-
-        <Link to="/register">
-          <button type="submit" data-testid="common_login__button-register">
-            Ainda não tenho conta
-          </button>
-        </Link>
+        <button
+          type="button"
+          data-testid="common_login__button-register"
+          onClick={ () => navigate('/register') }
+        >
+          Ainda não tenho conta
+        </button>
+        {roles === 'customer' && navigate('/customer/products')}
+        {roles === 'seller' && navigate('/seller/orders')}
+        {roles === 'administrator' && navigate('/admin/manage')}
+        {erro && (
+          <p data-testid="common_login__element-invalid-email ">
+            {messageError}
+          </p>
+        )}
       </form>
     </div>
   );

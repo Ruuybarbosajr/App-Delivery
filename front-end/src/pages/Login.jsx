@@ -79,7 +79,7 @@ function Login() {
         {roles === 'seller' && navigate('/seller/orders')}
         {roles === 'administrator' && navigate('/admin/manage')}
         {erro && (
-          <p data-testid="common_login__element-invalid-email ">
+          <p data-testid="common_login__element-invalid-email">
             {messageError}
           </p>
         )}

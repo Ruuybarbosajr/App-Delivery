@@ -1,12 +1,12 @@
 const { expect } = require('chai')
 const sinon = require('sinon')
-const service = require('../../api/services/login.service');
+const service = require('../../api/services');
 const loginData = require('../mocks/loginData');
 const userData = require('../mocks/userData');
-const { loginController } = require('../../api/controllers/login.controller')
+const controller = require('../../api/controllers')
 
 describe('Testa camada controller', () => {
-  describe('Testa função loginController', () => {
+  describe('Testa função signIn', () => {
     
     describe('Em caso de sucesso', () => {
       const req = {
@@ -16,7 +16,7 @@ describe('Testa camada controller', () => {
       const next = sinon.stub().returns();
   
       before(() => {
-        sinon.stub(service, 'loginService').resolves(userData);
+        sinon.stub(service.login, 'signIn').resolves(userData);
   
         res.status = sinon.stub().returns(res)
         res.json = sinon.stub().returns(userData)
@@ -25,7 +25,7 @@ describe('Testa camada controller', () => {
       after(() => sinon.restore())
 
       it('Deve retornar um status 200 e os dados do usuário', async () => {
-        const suv = await loginController(req, res, next)
+        const suv = await controller.login.signIn(req, res, next)
         expect(res.status.calledWith(200)).to.be.true
         expect(suv).to.be.eql(userData)
       });
@@ -36,9 +36,10 @@ describe('Testa camada controller', () => {
       const req = { body: {} };
       const res = {};
       const next = sinon.stub().returns();
-  
+      const error = new Error('Error fake')
+
       before(() => {
-        sinon.stub(service, 'loginService').resolves();
+        sinon.stub(service.login, 'signIn').throws(error);
 
         res.status = sinon.stub().returns(res)
         res.json = sinon.stub().returns()
@@ -47,11 +48,8 @@ describe('Testa camada controller', () => {
       after(() => sinon.restore());
 
       it('A função next deve ser chamada com o parâmetro error', async () => {
-        try {
-          await loginController(req, res, next)
-        } catch (error) {
+          await controller.login.signIn(req, res, next);
           expect(next.calledWith(error)).to.be.true
-        }
       });
     });
   });

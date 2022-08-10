@@ -1,7 +1,7 @@
 const md5 = require('md5');
 const { User } = require('../../database/models');
 
-const userCreate = async (name, email, password, role) => {
+const userCreate = async (name, email, password, role = 'customer') => {
     const senhaCriptografada = md5(password);
     const newUser = await User.create({ name, email, password: senhaCriptografada, role });
     return newUser;

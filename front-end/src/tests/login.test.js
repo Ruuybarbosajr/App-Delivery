@@ -14,7 +14,7 @@ describe('Teste da tela Login', () => {
     expect(emailInput).toBeInTheDocument();
   });
 
-  it('botão é habilitado após preenchimento correto dos inputs', () => {
+  it('botão de Login é habilitado após preenchimento correto dos inputs', () => {
     render(<App />);
 
     const passwordInput = screen.getByTestId('common_login__input-password');
@@ -25,5 +25,13 @@ describe('Teste da tela Login', () => {
     userEvent.type(emailInput, 'fulana@deliveryapp.com');
 
     expect(btnLogin).toBeEnabled();
+  });
+
+  it('há um botão que que redireciona caso a pessoa não esteja registrada', () => {
+    render(<App />);
+
+    const btnLogin = screen.getByText('Ainda não tenho conta');
+
+    expect(btnLogin).toBeInTheDocument();
   });
 });

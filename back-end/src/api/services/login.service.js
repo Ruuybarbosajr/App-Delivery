@@ -5,7 +5,6 @@ const generateToken = require('../../utils/generateToken');
 
 module.exports = {
   async signIn(loginData) {
-    
     const findUser = await User.findOne({ where: { email: loginData.email } });
     if (!findUser) throw generateError(404, 'Not found');
    
@@ -15,7 +14,7 @@ module.exports = {
     const payload = {
       name,
       email,
-      role
+      role,
     };
 
     const token = generateToken(payload);

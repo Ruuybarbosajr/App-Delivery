@@ -2,10 +2,10 @@ const { expect } = require('chai')
 const sinon = require('sinon')
 const { User } = require('../../database/models')
 const loginData = require('../mocks/loginData')
-const { loginService } = require('../../api/services/login.service')
+const service = require('../../api/services')
 
 describe('Testa camada service', () => {
-  describe('Testa função loginService', () => {
+  describe('Testa função signIn', () => {
 
     describe('Com os dados válidos', () => {
 
@@ -22,7 +22,7 @@ describe('Testa camada service', () => {
       after(() => sinon.restore())
 
       it('Deve retonar um objeto com os dados e o token do usuário', async () => {
-        const suv = await loginService(loginData);
+        const suv = await service.login.signIn(loginData);
 
         expect(suv).to.have.key('name', 'email', 'role', 'token');
       });
@@ -37,7 +37,7 @@ describe('Testa camada service', () => {
 
       it('Deve retonar um error com status 404 e message "Not found"', async () => {
         try {
-          await loginService({ ...loginData, email: 'email@invalido.com'});
+          await service.login.signIn({ ...loginData, email: 'email@invalido.com'});
         } catch (error) {
           expect(error.message).to.be.equal('Not found');
           expect(error.status).to.be.equal(404);
@@ -60,7 +60,7 @@ describe('Testa camada service', () => {
 
       it('Deve retonar um error com status 400 e message "Invalid field"', async () => {
         try {
-          await loginService({ ...loginData, password: 'senhaInvalida'});
+          await service.login.signIn({ ...loginData, password: 'senhaInvalida'});
         } catch (error) {
           expect(error.message).to.be.equal('Invalid field');
           expect(error.status).to.be.equal(400);

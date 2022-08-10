@@ -6,6 +6,6 @@ const configJwt = {
 };
 
 module.exports = (payload) => {
-  const token = jwt.sign(payload, 'teste', configJwt);
+  const token = jwt.sign(payload, 'secret_key', configJwt);
   return token;
 };

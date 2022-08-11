@@ -1,9 +1,7 @@
-const express = require('express');
+const router = require('express').Router();
 const controller = require('../controllers');
-const validBodyRegister = require('../middlewares/validBodyRegister');
+const registerBodyValidation = require('../middlewares/registerBodyValidation');
 
-const router = express.Router();
-
-router.post('/', validBodyRegister, controller.register.create);
+router.post('/', registerBodyValidation, controller.register.create);
 
 module.exports = router;

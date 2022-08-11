@@ -5,5 +5,5 @@ const products = require('./products.controller');
 module.exports = {
   login,
   register,
-  products
+  products,
 };

@@ -1,4 +1,4 @@
-const schemaLogin = require('../../schemas/loginBody')
+const schemaLogin = require('../../schemas/loginBody');
 const generateError = require('../../utils/generateError');
 
 module.exports = (req, _res, next) => {

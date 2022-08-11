@@ -1,5 +1,5 @@
-const { Product } = require('../../database/models')
+const { Product } = require('../../database/models');
 
 module.exports = {
-  async getAll() { return Product.findAll() },
-}
+  async getAll() { return Product.findAll(); },
+};

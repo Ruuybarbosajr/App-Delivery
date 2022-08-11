@@ -1,4 +1,4 @@
-const service = require('../services')
+const service = require('../services');
 
 module.exports = {
   async getAll(_req, res, next) {
@@ -8,5 +8,5 @@ module.exports = {
     } catch (error) {
       next(error);
     }
-  }
-}
+  },
+};

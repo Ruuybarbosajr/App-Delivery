@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 module.exports = (token) => {
   try {
@@ -7,7 +7,7 @@ module.exports = (token) => {
   } catch ({ message }) {
     return {
       message,
-      status: 401
-    }
+      status: 401,
+    };
   }
-}
+};

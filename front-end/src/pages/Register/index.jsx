@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
-// import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AppContext from '../../context/appContext';
 
 export default function Register() {
-  // const history = useHistory();
+  const navigate = useNavigate();
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -15,14 +15,14 @@ export default function Register() {
   const { setLoginUser } = useContext(AppContext);
 
   async function create() {
-    axios.post('http://localhost:3002/register', {
+    axios.post('http://localhost:3001/register', {
       name,
       email,
       password,
     }).then((newUser) => {
       setLoginUser(newUser.data);
       setRegister(true);
-      // history.push('/customer/products');
+      navigate('/customer/products');
     }).catch((err) => {
       setIsError(true);
       setError(err.response.data.message);

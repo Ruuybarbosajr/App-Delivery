@@ -4,22 +4,22 @@ import styles from './index.module.css';
 
 function Header() {
   const getName = () => {
-    const user = JSON.parse(localStorage.getItem('token'));
-    return user;
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user.name;
   };
 
   return (
     <header>
       <nav className={ styles.navbar }>
-        <div>
+        <div data-testid="customer_products__element-navbar-link-products">
           <Link to="/customer/products">PRODUTOS</Link>
         </div>
 
-        <div>
+        <div data-testid="customer_products__element-navbar-link-orders">
           <Link to="/customer/orders">MEUS PEDIDOS</Link>
         </div>
 
-        <div>
+        <div data-testid="customer_products__element-navbar-user-full-name">
           <span>{ getName() }</span>
         </div>
         <Link
@@ -27,7 +27,8 @@ function Header() {
         >
           <button
             type="button"
-            onClick={ () => localStorage.setItem('token', []) }
+            data-testid="customer_products__element-navbar-link-logout"
+            onClick={ () => localStorage.setItem('user', []) }
           >
             Sair
           </button>

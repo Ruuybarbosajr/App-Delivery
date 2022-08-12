@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
-
 import { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import CartContext from '../../context/cartContext';
 
 export default function ProductsCards({ p }) {
@@ -83,3 +82,12 @@ export default function ProductsCards({ p }) {
     </div>
   );
 }
+
+ProductsCards.propTypes = {
+  p: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    price: PropTypes.string,
+    url_image: PropTypes.string,
+  }).isRequired,
+};

@@ -28,27 +28,28 @@ export default function ProductsWide() {
   }, [cart]);
 
   useEffect(() => {
-    try {
-      axios
+    async function getProducts() {
+      const { data } = await axios
         .get('http://localhost:3001/products', {
           headers: {
             authorization: accessToken.token,
           },
-        })
-        .then((product) => {
-          setProducts(product.data);
         });
-    } catch (error) {
-      console.log(error);
+      setProducts(data);
     }
+    getProducts();
   }, []);
 
   return (
     <div>
       <Header />
-      {products.map((product) => (
-        <ProductsCards p={ product } key={ product.id } />
-      ))}
+      {products.length > 0 ? (
+        products.map((product) => (
+          <ProductsCards p={ product } key={ product.id } />
+        ))
+      ) : (
+        <div>Carregando</div>
+      )}
 
       <button
         disabled={ cart.length === 0 }

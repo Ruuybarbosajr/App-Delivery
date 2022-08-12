@@ -1,15 +1,16 @@
 /* eslint-disable react/prop-types */
 
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import CartContext from '../../context/cartContext';
 
 export default function ProductsCards({ p }) {
   const { cart, setCart } = useContext(CartContext);
   const [qtd, setQtd] = useState(0);
 
-  function soma(nome, price) {
+  function soma(nome, preco) {
+    const price = Number(preco.replace(',', '.'));
     const number = -1;
-    setQtd(Number(qtd + 1));
+    setQtd(qtd + 1);
     const cartcp = [...cart];
     const searchIndex = cartcp.findIndex((item) => item.nome === nome);
     if (searchIndex === number) {
@@ -34,17 +35,19 @@ export default function ProductsCards({ p }) {
     }
   }
 
-  useEffect(() => {
-    // console.log(cart);
-  }, [cart]);
+  // useEffect(() => {
+  //   // console.log(cart);
+  // }, [cart]);
 
   return (
     <div className="Class">
       <div>
         <p data-testid={ `customer_products__element-card-price-${p.id}` }>
-          {p.price.replace('.', ',')}
+          {p.price}
         </p>
         <img
+          width="100px"
+          className="imagem"
           data-testid={ `customer_products__img-card-bg-image-${p.id}` }
           src={ p.url_image }
           alt={ p.name }

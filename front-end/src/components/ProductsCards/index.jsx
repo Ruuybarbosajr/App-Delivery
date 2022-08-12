@@ -7,22 +7,21 @@ export default function ProductsCards({ p }) {
   const { cart, setCart } = useContext(CartContext);
   const [qtd, setQtd] = useState(0);
 
-  function soma(nome, valor) {
-    const a = qtd;
+  function soma(nome, price) {
     const number = -1;
     setQtd(Number(qtd + 1));
     const cartcp = [...cart];
     const searchIndex = cartcp.findIndex((item) => item.nome === nome);
     if (searchIndex === number) {
-      cartcp.push({ nome, qtd: 1, valor });
+      cartcp.push({ nome, qtd: 1, price });
     } else {
-      cartcp[searchIndex].qtd = a + 1;
+      cartcp[searchIndex].qtd = qtd + 1;
     }
     setCart(cartcp);
+    // localStorage.setItem('cart', JSON.stringify(cartcp));
   }
 
   function subtrai(nome) {
-    const a = qtd;
     setQtd(Number(qtd - 1));
     const cartcp = [...cart];
     const searchIndex = cartcp.findIndex((item) => item.nome === nome);
@@ -30,7 +29,7 @@ export default function ProductsCards({ p }) {
       cartcp.splice(searchIndex, 1);
       setCart(cartcp);
     } else {
-      cartcp[searchIndex].qtd = a - 1;
+      cartcp[searchIndex].qtd = qtd - 1;
       setCart(cartcp);
     }
   }
@@ -43,7 +42,7 @@ export default function ProductsCards({ p }) {
     <div className="Class">
       <div>
         <p data-testid={ `customer_products__element-card-price-${p.id}` }>
-          {p.price}
+          {p.price.replace('.', ',')}
         </p>
         <img
           data-testid={ `customer_products__img-card-bg-image-${p.id}` }

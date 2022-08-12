@@ -11,16 +11,13 @@ export default function ProductsWide() {
   const { cart } = useContext(CartContext);
   const accessToken = JSON.parse(localStorage.getItem('user'));
   const [products, setProducts] = useState([]);
-  const [valorTotal, setValorTotal] = useState(0);
+  const [valorTotal, setValorTotal] = useState('0');
   console.log('cart:', cart);
 
   function verCarrinho() {
-    let contador = 0;
-    cart.forEach((e) => {
-      contador += e.qtd * e.price;
-    });
-    setValorTotal(Number(contador.toFixed(2)));
-    return contador;
+    const value = cart.reduce((acc, product) => acc + product.qtd * product.price, 0);
+    setValorTotal(value.toFixed(2));
+    return value;
   }
 
   useEffect(() => {
@@ -59,7 +56,7 @@ export default function ProductsWide() {
       >
         Ver carrinho:
         <span data-testid="customer_products__checkout-bottom-value">
-          {valorTotal}
+          {valorTotal.replace('.', ',')}
         </span>
       </button>
     </div>

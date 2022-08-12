@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const { Sale, User, SaleProduct } = require('../../database/models');
 const generateError = require('../../utils/generateError');
 const config = require('../../database/config/config');
-const getIds = require('../../utils/getIds')
+const insertIdSale = require('../../utils/insertIdSale')
 
 const sequelize = new Sequelize(config.development);
 
@@ -13,19 +13,18 @@ module.exports = {
     const findSeller =  await User.findOne({ where: { id: sellerId } });
     if (!findSeller) throw generateError(400, 'seller not found');
     
-    const insert = await sequelize.transaction(async (transaction) => {
-      
+    const newSaleId = await sequelize.transaction(async (transaction) => {
+
       const newSale = await Sale.create(
         { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber },
         { transaction }
       );
       
-      const productsId = getIds(products, newSale.dataValues.id);
-      await SaleProduct.bulkCreate(productsId, { transaction });
+      const productsToInsert = insertIdSale(products, newSale.dataValues.id);
+      await SaleProduct.bulkCreate(productsToInsert, { transaction });
       
-      return newSale.getProducts();
+      return newSale.dataValues.id;
     });
-
-    console.log('AAAAAAAAAAAAAAAA', insert);
+    return newSaleId;
   },
 };

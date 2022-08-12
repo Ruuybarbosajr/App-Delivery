@@ -26,7 +26,7 @@ module.exports = {
           key: 'id'
         }
       },
-      price: {
+      quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
       }

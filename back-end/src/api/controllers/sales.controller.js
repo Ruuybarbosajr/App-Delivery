@@ -5,10 +5,10 @@ module.exports = {
     try {
       const { sellerId, totalPrice, deliveryAddress, deliveryNumber, products } = req.body;
       const { id: userId } = req.user;
-      await service.sales.create(
+      const newSaleId = await service.sales.create(
         { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber, products }
       );
-      return res.status(200).end();
+      return res.status(201).json(newSaleId);
     } catch (error) {
       next(error);
     }

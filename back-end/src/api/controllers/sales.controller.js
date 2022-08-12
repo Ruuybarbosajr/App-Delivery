@@ -6,11 +6,11 @@ module.exports = {
       const { sellerId, totalPrice, deliveryAddress, deliveryNumber, products } = req.body;
       const { id: userId } = req.user;
       const newSaleId = await service.sales.create(
-        { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber, products }
+        { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber, products },
       );
       return res.status(201).json(newSaleId);
     } catch (error) {
       next(error);
     }
-  }
-}
+  },
+};

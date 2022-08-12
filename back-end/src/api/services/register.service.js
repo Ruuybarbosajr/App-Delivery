@@ -12,8 +12,10 @@ module.exports = {
 
     const encryptedPassword = md5(password);
     const roleVerified = schemaRole(role);
-    const { id } = await User.create({ name, email, password: encryptedPassword, role: roleVerified });
-    console.log(id);
+
+    const { id } = await User.create(
+      { name, email, password: encryptedPassword, role: roleVerified },
+    );
     
     const payload = {
       id,

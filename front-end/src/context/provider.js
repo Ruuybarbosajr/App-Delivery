@@ -1,16 +1,23 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './appContext';
+import CartContext from './cartContext';
 
 function Provider({ children }) {
   const [loginUser, setLoginUser] = useState([]);
+  const [cart, setCart] = useState([]);
 
   const contextValue = useMemo(() => ({ loginUser,
     setLoginUser }), [loginUser]);
+  const cartValue = useMemo(() => ({ cart,
+    setCart }), [cart]);
   return (
-    <AppContext.Provider value={ contextValue }>
-      {children}
-    </AppContext.Provider>
+
+    <CartContext.Provider value={ cartValue }>
+      <AppContext.Provider value={ contextValue }>
+        {children}
+      </AppContext.Provider>
+    </CartContext.Provider>
   );
 }
 

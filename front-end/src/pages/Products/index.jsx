@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import ProductsCards from '../../components/ProductsCards';
+import CartContext from '../../context/cartContext';
 
 const axios = require('axios');
 
 export default function ProductsWide() {
-  const accessToken = JSON.parse(localStorage.getItem('token'));
+  const { cart, setCart } = useContext(CartContext);
+  const accessToken = JSON.parse(localStorage.getItem('user'));
   const [products, setProducts] = useState([]);
   // const [qtd, setQtd] = useState(0);
-  // console.log(products);
+  console.log('cart:', cart);
 
   useEffect(() => {
     try {
       axios
-        .get('http://localhost:3002/products', {
+        .get('http://localhost:3001/products', {
           headers: {
             authorization: accessToken.token,
           },
@@ -32,6 +34,7 @@ export default function ProductsWide() {
       {products.map((product) => (
         <ProductsCards p={ product } key={ product.id } />
       ))}
+      <button type="button"> Ver carrinho: </button>
 
     </div>
   );

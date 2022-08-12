@@ -23,7 +23,8 @@ function Login() {
         email,
         password,
       });
-      localStorage.setItem('token', JSON.stringify(login.data));
+      // console.log(login);
+      localStorage.setItem('user', JSON.stringify(login.data));
       const { role } = login.data;
       if (role === 'customer') setRoles('customer');
       if (role === 'seller') setRoles('seller');

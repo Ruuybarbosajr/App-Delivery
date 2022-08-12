@@ -22,6 +22,7 @@ export default function Register() {
     }).then((newUser) => {
       setLoginUser(newUser.data);
       setRegister(true);
+      localStorage.setItem('user', JSON.stringify(newUser.data));
       navigate('/customer/products');
     }).catch((err) => {
       setIsError(true);

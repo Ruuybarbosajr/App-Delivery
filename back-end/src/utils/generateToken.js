@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
-const configJwt = {
-  expiresIn: '1d',
-  algorithm: 'HS256',
-};
+const jwtKey = require('fs')
+  .readFileSync(path.join(__dirname, '../../jwt.evaluation.key'), { encoding: 'utf-8' });
 
 module.exports = (payload) => {
-  const token = jwt.sign(payload, 'secret_key', configJwt);
+  const token = jwt.sign(payload, jwtKey);
   return token;
 };

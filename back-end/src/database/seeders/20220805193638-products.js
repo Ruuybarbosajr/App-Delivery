@@ -17,7 +17,7 @@ module.exports = {
       },
       {
         id: 3,
-        name: 'Antactica Pilsen 300ml',
+        name: 'Antarctica Pilsen 300ml',
         price: 2.49,
         url_image: 'http://localhost:3001/images/antarctica_pilsen_300ml.jpg'
       },

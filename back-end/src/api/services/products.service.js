@@ -1,5 +1,5 @@
 const { Product } = require('../../database/models');
-const serializePrice = require('../../utils/serializePrice')
+const serializePrice = require('../../utils/serializePrice');
 
 module.exports = {
   async getAll() { 

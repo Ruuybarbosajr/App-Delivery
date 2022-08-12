@@ -8,12 +8,13 @@ module.exports = {
     const findUser = await User.findOne({ where: { email: loginData.email } });
     if (!findUser) throw generateError(404, 'Not found');
    
-    const { name, email, password, role } = findUser;
+    const { id, name, email, password, role } = findUser;
     const decryptedPassword = md5(loginData.password);
 
     if (decryptedPassword !== password) throw generateError(400, 'Invalid field');
 
     const payload = {
+      id,
       name,
       email,
       role,

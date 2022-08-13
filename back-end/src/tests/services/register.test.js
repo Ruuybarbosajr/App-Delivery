@@ -19,8 +19,8 @@ describe('Testa a camada service', () => {
       it('Deve retonar um objeto com os dados e o token do usuário', async () => {
         const { email, name, password } = newUserData;
         const suv = await service.register.create(email, name, password);
-        expect(suv).to.have.key('name', 'email', 'role', 'token');
-      })
+        expect(suv).to.have.key('name', 'email', 'role', 'token', 'id');
+      });
     });
 
 

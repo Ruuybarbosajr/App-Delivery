@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { Sale, User, SaleProduct } = require('../../database/models');
+const { Sale, User, SaleProduct, Product } = require('../../database/models');
 const generateError = require('../../utils/generateError');
 const config = require('../../database/config/config');
 const insertIdSale = require('../../utils/insertIdSale');
@@ -26,4 +26,22 @@ module.exports = {
     });
     return newSaleId;
   },
+
+  async findOne(id, user) {
+    const findSeller = await Sale.findByPk(id, {
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: User, as: 'seller', attributes: { exclude: ['password', 'email', 'role'] } },
+        { model: Product, as: 'products', through: { attributes: [] } },
+      ],
+      attributes: { exclude: ['userId', 'sellerId'] },
+    },
+    );
+    if (!findSeller) throw generateError(400, 'seller not found');
+
+    const { user: { id: userId } } = findSeller.dataValues;
+    if (userId !== user.id) throw generateError(401, 'purchase does not belong to the user');
+    
+    return findSeller;
+  }
 };

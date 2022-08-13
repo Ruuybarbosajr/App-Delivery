@@ -15,7 +15,7 @@ export default function Register() {
   const { setLoginUser } = useContext(AppContext);
 
   async function create() {
-    axios.post('http://localhost:3001/register', {
+    axios.post('http://localhost:3002/register', {
       name,
       email,
       password,

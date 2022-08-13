@@ -27,7 +27,7 @@ export default function ProductsWide() {
   useEffect(() => {
     async function getProducts() {
       const { data } = await axios
-        .get('http://localhost:3001/products', {
+        .get('http://localhost:3002/products', {
           headers: {
             authorization: accessToken.token,
           },

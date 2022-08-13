@@ -16,9 +16,9 @@ module.exports = {
 
   async findOne(req, res, next) {
     try {
-      const { id } = req.params
+      const { id } = req.params;
       const sale = await service.sales.findOne(id, { ...req.user });
-      return res.status(200).json(sale)
+      return res.status(200).json(sale);
     } catch (error) {
      next(error);
     }

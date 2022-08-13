@@ -10,7 +10,8 @@ module.exports = {
   async create(sale) {
     const { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber, products } = sale;
 
-    const findSeller = await User.findOne({ where: { id: sellerId } });
+    const findSeller = await User.findOne({ where: { id: sellerId, role: 'seller' } });
+
     if (!findSeller) throw generateError(400, 'seller not found');
     
     const newSaleId = await sequelize.transaction(async (transaction) => {
@@ -28,20 +29,19 @@ module.exports = {
   },
 
   async findOne(id, user) {
-    const findSeller = await Sale.findByPk(id, {
+    const findSale = await Sale.findByPk(id, {
       include: [
         { model: User, as: 'user', attributes: { exclude: ['password'] } },
         { model: User, as: 'seller', attributes: { exclude: ['password', 'email', 'role'] } },
         { model: Product, as: 'products', through: { attributes: [] } },
       ],
       attributes: { exclude: ['userId', 'sellerId'] },
-    },
-    );
-    if (!findSeller) throw generateError(400, 'seller not found');
+    });
+    if (!findSale) throw generateError(400, 'sale not found');
 
-    const { user: { id: userId } } = findSeller.dataValues;
+    const { user: { id: userId } } = findSale.dataValues;
     if (userId !== user.id) throw generateError(401, 'purchase does not belong to the user');
     
-    return findSeller;
-  }
+    return findSale;
+  },
 };

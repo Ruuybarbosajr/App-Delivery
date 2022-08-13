@@ -3,6 +3,7 @@ const register = require('./register.routes');
 const products = require('./products.routes');
 const images = require('./images.routes');
 const sales = require('./sales.routes');
+const user = require('./user.routes');
 
 module.exports = {
   login,
@@ -10,4 +11,5 @@ module.exports = {
   products,
   images,
   sales,
+  user,
 };

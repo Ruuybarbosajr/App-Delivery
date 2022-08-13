@@ -13,6 +13,7 @@ app.use('/register', routes.register);
 app.use('/products', routes.products);
 app.use('/images', routes.images);
 app.use('/sales', routes.sales);
+app.use('/user', routes.user);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 

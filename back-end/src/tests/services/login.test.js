@@ -24,7 +24,7 @@ describe('Testa camada service', () => {
       it('Deve retonar um objeto com os dados e o token do usuário', async () => {
         const suv = await service.login.signIn(loginData);
 
-        expect(suv).to.have.key('name', 'email', 'role', 'token');
+        expect(suv).to.have.key('name', 'email', 'role', 'token', 'id');
       });
     });
 

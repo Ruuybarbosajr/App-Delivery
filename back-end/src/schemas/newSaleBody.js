@@ -7,8 +7,10 @@ const schemaNewSale = joi.object({
   deliveryNumber: joi.string().required(),
   products: joi.array().items(
     joi.object({
+      name: joi.string(),
+      price: joi.string(),
       id: joi.number().min(1).required(),
-      quantity: joi.number().min(1).required(),
+      qtd: joi.number().min(1).required(),
     }).required(),
   ).required(),
 });

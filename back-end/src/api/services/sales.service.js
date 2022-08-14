@@ -13,7 +13,7 @@ module.exports = {
 
     const findSeller = await User.findOne({ where: { id: sellerId, role: 'seller' } });
 
-    if (!findSeller) throw generateError(400, 'seller not found');
+    if (!findSeller) throw generateError(404, 'seller not found');
     
     const newSaleId = await sequelize.transaction(async (transaction) => {
       const newSale = await Sale.create(

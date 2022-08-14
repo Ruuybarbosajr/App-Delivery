@@ -11,8 +11,8 @@ export default function ProductsCards({ p }) {
   }
 
   useEffect(() => {
-    const { name, price } = p;
-    if (qtd) setCart((prev) => [...removeItem(prev, name), { name, qtd, price }]);
+    const { name, price, id } = p;
+    if (qtd) setCart((prev) => [...removeItem(prev, name), { name, qtd, price, id }]);
     else setCart((prev) => removeItem(prev, name));
   }, [qtd, p, setCart]);
 

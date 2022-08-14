@@ -9,9 +9,9 @@ module.exports = {
     if (!findUser) throw generateError(404, 'Not found');
    
     const { id, name, email, password, role } = findUser;
-    const decryptedPassword = md5(loginData.password);
+    const encryptedPassword = md5(loginData.password);
 
-    if (decryptedPassword !== password) throw generateError(400, 'Invalid field');
+    if (encryptedPassword !== password) throw generateError(400, 'Invalid field');
 
     const payload = {
       id,

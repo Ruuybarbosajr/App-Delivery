@@ -42,6 +42,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false,
       defaultValue: 'Pendente',
+      validate: {
+        isIn: {
+          args: [['Pendente', 'Preparando', 'Em Trânsito', 'Entregue']],
+          msg: "Status not found"
+        }
+      }
     }
   },
   {

@@ -23,4 +23,14 @@ module.exports = {
      next(error);
     }
   },
+
+  async updateStatus(req, res, next) {
+     try {
+      const { body: { status }, params: { id }, user } = req;
+      const updatedSale = await service.sales.updateStatus(id, status, user);
+      return res.status(200).json(updatedSale);
+     } catch (error) {
+      next(error);
+     }
+  },
 };

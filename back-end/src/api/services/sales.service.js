@@ -3,6 +3,7 @@ const { Sale, User, SaleProduct, Product } = require('../../database/models');
 const generateError = require('../../utils/generateError');
 const config = require('../../database/config/config');
 const insertIdSale = require('../../utils/insertIdSale');
+const permissionToCheck = require('../../schemas/permissionToCheck');
 
 const sequelize = new Sequelize(config.development);
 
@@ -37,11 +38,22 @@ module.exports = {
       ],
       attributes: { exclude: ['userId', 'sellerId'] },
     });
-    if (!findSale) throw generateError(400, 'sale not found');
+    if (!findSale) throw generateError(404, 'sale not found');
 
-    const { user: { id: userId } } = findSale.dataValues;
-    if (userId !== user.id) throw generateError(401, 'purchase does not belong to the user');
+    const isValidUser = permissionToCheck(user, findSale.dataValues);
+    if (!isValidUser) throw generateError(401, 'not authorized');
     
     return findSale;
+  },
+
+  async updateStatus(id, status, user) {
+    const sale = await this.findOne(id, user);
+    
+    await Sale.update({ status }, { where: { id } });
+
+    return {
+      ...sale.dataValues,
+      status,
+    };
   },
 };

@@ -17,7 +17,7 @@ module.exports = {
     
     const newSaleId = await sequelize.transaction(async (transaction) => {
       const newSale = await Sale.create(
-        { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber },
+        { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber, saleDate: new Date() },
         { transaction },
       );
       

@@ -5,6 +5,8 @@ import './App.css';
 import Login from './pages/Login';
 import Products from './pages/Products';
 import Register from './pages/Register';
+import Checkout from './pages/Checkout';
+import ProviderCart from './context/ProviderCart';
 
 function App() {
   return (
@@ -13,7 +15,22 @@ function App() {
         <Route path="/" element={ <Navigate replace to="/login" /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
-        <Route path="/customer/products" element={ <Products /> } />
+        <Route
+          path="/customer/products"
+          element={
+            <ProviderCart>
+              <Products />
+            </ProviderCart>
+          }
+        />
+        <Route
+          path="/customer/checkout"
+          element={
+            <ProviderCart>
+              <Checkout />
+            </ProviderCart>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

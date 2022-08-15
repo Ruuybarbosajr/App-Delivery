@@ -1,20 +1,25 @@
 import { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import CartContext from '../../context/cartContext';
+import CartContext from '../../context/CartContext';
+import addItem from '../../helpers/addItem';
+import removeItem from '../../helpers/removeItem';
 
 export default function ProductsCards({ p }) {
-  const { setCart } = useContext(CartContext);
-  const [qtd, setQtd] = useState(0);
+  const { setCart, cart } = useContext(CartContext);
 
-  function removeItem(prev, name) {
-    return prev.filter((product) => product.name !== name);
-  }
+  const [qtd, setQtd] = useState(() => cart.products.find(
+    (prod) => prod.id === p.id,
+  )?.qtd || 0);
 
   useEffect(() => {
-    const { name, price } = p;
-    if (qtd) setCart((prev) => [...removeItem(prev, name), { name, qtd, price }]);
-    else setCart((prev) => removeItem(prev, name));
-  }, [qtd, p, setCart]);
+    const { price, name, id } = p;
+    const isInsertedInCart = cart.products.find((product) => product.id === id);
+    const bodyProduct = { price, id, name, qtd };
+
+    if (isInsertedInCart || qtd) {
+      setCart((prev) => ({ ...prev, products: addItem(prev.products, id, bodyProduct) }));
+    } else setCart((prev) => ({ ...prev, products: removeItem(prev.products, id) }));
+  }, [qtd]);
 
   return (
     <div className="Class">

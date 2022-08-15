@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AppContext from '../../context/appContext';
+import UserContext from '../../context/UserContext';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function Register() {
   const [register, setRegister] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [isDisabled, setIsDisabled] = React.useState(true);
-  const { setLoginUser } = useContext(AppContext);
+  const { setLoginUser } = useContext(UserContext);
 
   async function create() {
     axios.post('http://localhost:3001/register', {
@@ -22,6 +22,7 @@ export default function Register() {
     }).then((newUser) => {
       setLoginUser(newUser.data);
       setRegister(true);
+      localStorage.setItem('cart', JSON.stringify({ products: [], totalPrice: '0.00' }));
       localStorage.setItem('user', JSON.stringify(newUser.data));
       navigate('/customer/products');
     }).catch((err) => {

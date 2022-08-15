@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import ProductsCards from '../../components/ProductsCards';
-import CartContext from '../../context/cartContext';
+import CartContext from '../../context/CartContext';
 
 const axios = require('axios');
 
@@ -11,19 +11,6 @@ export default function ProductsWide() {
   const { cart } = useContext(CartContext);
   const accessToken = JSON.parse(localStorage.getItem('user'));
   const [products, setProducts] = useState([]);
-  const [valorTotal, setValorTotal] = useState('0');
-  console.log('cart:', cart);
-
-  function verCarrinho() {
-    const value = cart.reduce((acc, product) => acc + product.qtd * product.price, 0);
-    setValorTotal(value.toFixed(2));
-    localStorage.setItem('totalValue', value.toFixed(2));
-    return value;
-  }
-
-  useEffect(() => {
-    verCarrinho();
-  }, [cart]);
 
   useEffect(() => {
     async function getProducts() {
@@ -50,14 +37,14 @@ export default function ProductsWide() {
       )}
 
       <button
-        disabled={ cart.length === 0 }
+        disabled={ !cart.products.length }
         onClick={ () => navigate('/customer/checkout') }
         data-testid="customer_products__button-cart"
         type="button"
       >
         Ver carrinho:
         <span data-testid="customer_products__checkout-bottom-value">
-          {valorTotal.replace('.', ',')}
+          {cart.totalPrice.replace('.', ',')}
         </span>
       </button>
     </div>

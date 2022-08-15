@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CartContext from '../../context/CartContext';
 
 const axios = require('axios');
 
 export default function FormCheckout() {
   const navigate = useNavigate();
+  const { cart } = useContext(CartContext);
   const [sellers, setSellers] = useState([]);
   const accessToken = JSON.parse(localStorage.getItem('user'));
+
   const [sale, setSale] = useState({
     sellerId: '',
-    totalPrice: JSON.parse(localStorage.getItem('totalValue')),
     deliveryAddress: '',
     deliveryNumber: '',
-    products: JSON.parse(localStorage.getItem('cart')),
   });
 
   async function getSellerId() {
@@ -22,7 +23,7 @@ export default function FormCheckout() {
           authorization: accessToken.token,
         },
       });
-      // console.log(getSellers)
+
       setSellers(getSellers.data);
       const [seller] = getSellers.data;
       setSale((prev) => ({ ...prev, sellerId: seller.id }));
@@ -32,14 +33,15 @@ export default function FormCheckout() {
   }
 
   async function getId() {
-    const id = await axios.post('http://localhost:3001/sales/register', {
-      ...sale,
+    const { products, totalPrice } = cart;
+    const { data } = await axios.post('http://localhost:3001/sales/register', {
+      ...sale, products, totalPrice,
     }, {
       headers: {
         authorization: accessToken.token,
       },
     });
-    navigate(`/customer/orders/${id.data}`);
+    navigate(`/customer/orders/${data}`);
   }
 
   useEffect(() => {

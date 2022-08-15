@@ -17,6 +17,7 @@ export default function ProductsWide() {
   function verCarrinho() {
     const value = cart.reduce((acc, product) => acc + product.qtd * product.price, 0);
     setValorTotal(value.toFixed(2));
+    localStorage.setItem('totalValue', value.toFixed(2));
     return value;
   }
 

@@ -14,7 +14,7 @@ export default function ProductsCards({ p }) {
     const { name, price, id } = p;
     if (qtd) setCart((prev) => [...removeItem(prev, name), { name, qtd, price, id }]);
     else setCart((prev) => removeItem(prev, name));
-  }, [qtd, p, setCart]);
+  }, [qtd]);
 
   return (
     <div className="Class">

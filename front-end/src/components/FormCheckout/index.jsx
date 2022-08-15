@@ -39,7 +39,7 @@ export default function FormCheckout() {
         authorization: accessToken.token,
       },
     });
-    navigate(`/seller/orders/${id.data}`);
+    navigate(`/customer/orders/${id.data}`);
   }
 
   useEffect(() => {

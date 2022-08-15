@@ -11,6 +11,7 @@ export default function TableCheckout() {
       (acc, product) => acc + product.qtd * product.price,
       0,
     );
+    localStorage.setItem('totalValue', valor.toFixed(2));
     setValue(valor.toFixed(2));
   }
 

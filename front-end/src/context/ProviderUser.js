@@ -1,12 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import UserContext from './UserContext';
 
 function ProviderUser({ children }) {
-  const [loginUser, setLoginUser] = useState({});
+  const [userData, setUserData] = useState({});
+  const contextValue = useMemo(() => ({ userData,
+    setUserData }), [userData]);
 
-  const contextValue = useMemo(() => ({ loginUser,
-    setLoginUser }), [loginUser]);
+  useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem('user')));
+  }, []);
 
   return (
     <UserContext.Provider value={ contextValue }>

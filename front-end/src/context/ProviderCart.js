@@ -4,8 +4,8 @@ import CartContext from './CartContext';
 
 function ProviderCart({ children }) {
   const [cart, setCart] = useState({
-    products: JSON.parse(localStorage.getItem('cart')).products,
-    totalPrice: JSON.parse(localStorage.getItem('cart')).totalPrice,
+    products: JSON.parse(localStorage.getItem('cart'))?.products || [],
+    totalPrice: JSON.parse(localStorage.getItem('cart'))?.totalPrice || '0.00',
   });
 
   useEffect(() => {

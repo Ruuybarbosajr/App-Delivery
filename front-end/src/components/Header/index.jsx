@@ -1,12 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import UserContext from '../../context/UserContext';
 import styles from './index.module.css';
 
 function Header() {
-  const getName = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user.name;
-  };
+  const { userData } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  function logout() {
+    localStorage.removeItem('user');
+    navigate('/login');
+  }
 
   return (
     <header>
@@ -20,19 +24,15 @@ function Header() {
         </div>
 
         <div data-testid="customer_products__element-navbar-user-full-name">
-          <span>{ getName() }</span>
+          <span>{ userData.name }</span>
         </div>
-        <Link
-          to="/login"
+        <button
+          type="button"
+          data-testid="customer_products__element-navbar-link-logout"
+          onClick={ () => logout() }
         >
-          <button
-            type="button"
-            data-testid="customer_products__element-navbar-link-logout"
-            onClick={ () => localStorage.setItem('user', []) }
-          >
-            Sair
-          </button>
-        </Link>
+          Sair
+        </button>
       </nav>
     </header>
   );

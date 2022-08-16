@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../../context/UserContext';
 
 const axios = require('axios');
 
@@ -9,7 +10,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [erro, setErro] = useState(false);
   const [messageError, setMessageError] = useState('');
-  const [roles, setRoles] = useState('');
+  const { setUserData } = useContext(UserContext);
 
   const emailRegex = /\S+@\S+\.\S+/;
   const validEmail = emailRegex.test(email);
@@ -23,12 +24,13 @@ function Login() {
         email,
         password,
       });
+      setUserData(login.data);
       localStorage.setItem('user', JSON.stringify(login.data));
       localStorage.setItem('cart', JSON.stringify({ products: [], totalPrice: '0.00' }));
       const { role } = login.data;
-      if (role === 'customer') setRoles('customer');
-      if (role === 'seller') setRoles('seller');
-      if (role === 'administrator') setRoles('administrator');
+      if (role === 'customer') navigate('/customer/products');
+      if (role === 'seller') navigate('/seller/orders');
+      if (role === 'administrator') navigate('/admin/manage');
     } catch (error) {
       setErro(true);
       const { message } = error.response.data;
@@ -77,9 +79,6 @@ function Login() {
         >
           Ainda não tenho conta
         </button>
-        {roles === 'customer' && navigate('/customer/products')}
-        {roles === 'seller' && navigate('/seller/orders')}
-        {roles === 'administrator' && navigate('/admin/manage')}
         {erro && (
           <p data-testid="common_login__element-invalid-email">
             {messageError}

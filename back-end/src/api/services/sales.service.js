@@ -3,6 +3,7 @@ const { Sale, User, SaleProduct, Product } = require('../../database/models');
 const generateError = require('../../utils/generateError');
 const config = require('../../database/config/config');
 const insertIdSale = require('../../utils/insertIdSale');
+const permissionToCheck = require('../../schemas/permissionToCheck');
 
 const sequelize = new Sequelize(config.development);
 
@@ -12,11 +13,11 @@ module.exports = {
 
     const findSeller = await User.findOne({ where: { id: sellerId, role: 'seller' } });
 
-    if (!findSeller) throw generateError(400, 'seller not found');
+    if (!findSeller) throw generateError(404, 'seller not found');
     
     const newSaleId = await sequelize.transaction(async (transaction) => {
       const newSale = await Sale.create(
-        { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber },
+        { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber, saleDate: new Date() },
         { transaction },
       );
       
@@ -37,11 +38,22 @@ module.exports = {
       ],
       attributes: { exclude: ['userId', 'sellerId'] },
     });
-    if (!findSale) throw generateError(400, 'sale not found');
+    if (!findSale) throw generateError(404, 'sale not found');
 
-    const { user: { id: userId } } = findSale.dataValues;
-    if (userId !== user.id) throw generateError(401, 'purchase does not belong to the user');
+    const isValidUser = permissionToCheck(user, findSale.dataValues);
+    if (!isValidUser) throw generateError(401, 'not authorized');
     
     return findSale;
+  },
+
+  async updateStatus(id, status, user) {
+    const sale = await this.findOne(id, user);
+    
+    await Sale.update({ status }, { where: { id } });
+
+    return {
+      ...sale.dataValues,
+      status,
+    };
   },
 };

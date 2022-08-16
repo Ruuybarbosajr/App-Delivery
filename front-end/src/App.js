@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import Products from './pages/Products';
 import ProductsDetails from './pages/ProductsDetails';
 import Register from './pages/Register';
+import Checkout from './pages/Checkout';
+import ProviderCart from './context/ProviderCart';
 
 function App() {
   return (
@@ -16,6 +18,22 @@ function App() {
         <Route path="/register" element={ <Register /> } />
         <Route path="/customer/products" element={ <Products /> } />
         <Route path="/customer/orders/:id" element={ <ProductsDetails /> } />
+        <Route
+          path="/customer/products"
+          element={
+            <ProviderCart>
+              <Products />
+            </ProviderCart>
+          }
+        />
+        <Route
+          path="/customer/checkout"
+          element={
+            <ProviderCart>
+              <Checkout />
+            </ProviderCart>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

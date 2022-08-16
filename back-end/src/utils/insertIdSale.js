@@ -1,5 +1,5 @@
-module.exports = (products, saleId) => products.map((product) => ({
+module.exports = (products, saleId) => products.map(({ id, qtd }) => ({
   saleId,
-  productId: product.id,
-  ...product,
+  productId: id,
+  quantity: qtd,
 }));

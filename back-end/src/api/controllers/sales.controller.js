@@ -33,4 +33,14 @@ module.exports = {
       next(error);
      }
   },
+
+  async getAll(req, res, next) {
+    try {
+      const { id, role } = req.user;
+      const allSales = await service.sales.getAll(id, role);
+      return res.status(200).json(allSales);
+    } catch (error) {
+      next(error);
+    }
+  },
 };

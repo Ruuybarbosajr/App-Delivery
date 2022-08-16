@@ -7,6 +7,16 @@ const permissionToCheck = require('../../schemas/permissionToCheck');
 
 const sequelize = new Sequelize(config.development);
 
+const getAllSales = async (queryConfig = {}) => Sale.findAll({
+  ...queryConfig,
+  include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: User, as: 'seller', attributes: { exclude: ['password', 'email', 'role'] } },
+    { model: Product, as: 'products', through: { attributes: [] } },
+  ],
+  attributes: { exclude: ['userId', 'sellerId'] },
+});
+
 module.exports = {
   async create(sale) {
     const { sellerId, userId, totalPrice, deliveryAddress, deliveryNumber, products } = sale;
@@ -30,14 +40,7 @@ module.exports = {
   },
 
   async findOne(id, user) {
-    const findSale = await Sale.findByPk(id, {
-      include: [
-        { model: User, as: 'user', attributes: { exclude: ['password'] } },
-        { model: User, as: 'seller', attributes: { exclude: ['password', 'email', 'role'] } },
-        { model: Product, as: 'products', through: { attributes: [] } },
-      ],
-      attributes: { exclude: ['userId', 'sellerId'] },
-    });
+    const [findSale] = await getAllSales({ where: { id } });
     if (!findSale) throw generateError(404, 'sale not found');
 
     const isValidUser = permissionToCheck(user, findSale.dataValues);
@@ -55,5 +58,15 @@ module.exports = {
       ...sale.dataValues,
       status,
     };
+  },
+
+  async getAll(id, role) {
+    const callByRole = {
+      customer: getAllSales({ where: { userId: id } }),
+      seller: getAllSales({ where: { sellerId: id } }),
+      administrator: getAllSales(),
+    };
+
+    return callByRole[role];
   },
 };

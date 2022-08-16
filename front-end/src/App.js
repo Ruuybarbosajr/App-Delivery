@@ -4,7 +4,7 @@ import './App.css';
 
 import Login from './pages/Login';
 import Products from './pages/Products';
-import ProductsDetails from './pages/ProductsDetails';
+import OrderDetails from './pages/OrderDetails';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import ProviderCart from './context/ProviderCart';
@@ -17,8 +17,16 @@ function App() {
         <Route path="/" element={ <Navigate replace to="/login" /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
-        <Route path="/customer/products" element={ <Products /> } />
-        <Route path="/customer/orders/:id" element={ <ProductsDetails /> } />
+        <Route
+          path="/customer/orders/:id"
+          element={
+            <ProviderCart>
+              <AuthToken>
+                <OrderDetails />
+              </AuthToken>
+            </ProviderCart>
+          }
+        />
         <Route
           path="/customer/products"
           element={

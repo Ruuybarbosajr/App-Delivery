@@ -8,9 +8,9 @@ const axios = require('axios');
 
 export default function ProductsWide() {
   const navigate = useNavigate();
-  console.log(CartContext);
-  const p = useContext(CartContext);
-  console.log(p);
+  // console.log(CartContext);
+  // const p = useContext(CartContext);
+  // console.log(p);
   const { cart } = useContext(CartContext);
   const accessToken = JSON.parse(localStorage.getItem('user'));
   const [prod, setProducts] = useState([]);
@@ -18,7 +18,7 @@ export default function ProductsWide() {
   useEffect(() => {
     async function getProducts() {
       const { data } = await axios
-        .get('http://localhost:3002/products', {
+        .get('http://localhost:3001/products', {
           headers: {
             authorization: accessToken.token,
           },

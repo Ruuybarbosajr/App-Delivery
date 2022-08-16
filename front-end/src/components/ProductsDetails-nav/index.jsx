@@ -10,9 +10,10 @@ export default function productDetailsNav({ element }) {
   const id4 = 'customer_order_details__element-order-table-item-number-<index>';
   const id5 = 'customer_order_details__element-order-table-name-<index>';
 
-  function updateStatus(id) {
+  function updateStatus() {
+    console.log(' passou aqui');
     const accessToken = JSON.parse(localStorage.getItem('user'));
-    axios.patch(`http://localhost:3001/sales/${id}/update`, { status: 'ENTREGUE' }, {
+    axios.patch(`http://localhost:3001/sales/${element.id}/update`, { status: 'Entregue' }, {
       headers: {
         authorization: accessToken.token,
       } });
@@ -21,14 +22,14 @@ export default function productDetailsNav({ element }) {
   return (
     <div>
       <nav className={ styles.navbar }>
-        <p data-testid={ id1 }>{element.nDoPedido}</p>
-        <p data-testid={ id2 }>{element.vendedora}</p>
-        <p data-testid={ id3 }>{element.data}</p>
+        <p data-testid={ id1 }>{element.id}</p>
+        <p data-testid={ id2 }>{element.seller.name}</p>
+        <p data-testid={ id3 }>{element.saleDate}</p>
         <p data-testid={ id4 }>{element.status}</p>
         <button
           type="button"
           data-testid={ id5 }
-          onClick={ updateStatus(element.nDoPedido) }
+          onClick={ () => updateStatus() }
         >
           MARCAR COMO ENTREGUE
         </button>

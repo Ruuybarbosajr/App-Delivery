@@ -8,9 +8,12 @@ const axios = require('axios');
 
 export default function ProductsWide() {
   const navigate = useNavigate();
+  // console.log(CartContext);
+  // const p = useContext(CartContext);
+  // console.log(p);
   const { cart } = useContext(CartContext);
   const accessToken = JSON.parse(localStorage.getItem('user'));
-  const [products, setProducts] = useState([]);
+  const [prod, setProducts] = useState([]);
 
   useEffect(() => {
     async function getProducts() {
@@ -28,8 +31,8 @@ export default function ProductsWide() {
   return (
     <div>
       <Header />
-      {products.length > 0 ? (
-        products.map((product) => (
+      {prod.length > 0 ? (
+        prod.map((product) => (
           <ProductsCards p={ product } key={ product.id } />
         ))
       ) : (

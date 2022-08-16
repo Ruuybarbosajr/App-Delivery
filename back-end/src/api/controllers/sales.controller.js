@@ -27,6 +27,9 @@ module.exports = {
   async updateStatus(req, res, next) {
      try {
       const { body: { status }, params: { id }, user } = req;
+      console.log(status);
+      console.log(user);
+      console.log(id);
       const updatedSale = await service.sales.updateStatus(id, status, user);
       return res.status(200).json(updatedSale);
      } catch (error) {

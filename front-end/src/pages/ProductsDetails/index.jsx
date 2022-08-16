@@ -1,18 +1,19 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import ProductDetailsNav from '../../components/ProductsDetails-nav';
-import CartContext from '../../context/cartContext';
+import CartContext from '../../context/CartContext';
 
 // verificar como pegar o cart do estado global
+console.log(CartContext);
 
-// const axios = require('axios');
+const axios = require('axios');
 // useEffect, useContext,
 export default function ProductsDetails() {
   // const navigate = useNavigate();
-  const { cart } = useContext(CartContext);
+  // const cart = useContext(CartContext);
   const [valorTotal, serValorTotal] = useState(0);
-  // const accessToken = JSON.parse(localStorage.getItem('user'));
+  const accessToken = JSON.parse(localStorage.getItem('user'));
   const [sales] = useState([{
     nDoPedido: 'PEDIDO 0003',
     vendedora: 'fulanda de tal',
@@ -20,11 +21,10 @@ export default function ProductsDetails() {
     status: 'ENTREGUE',
     statusPedido: 'MARCAR COMO ENTREGUE',
   }]);
-
-  /* useEffect(() => {
-    async function getSales() {
+  useEffect(() => {
+    async function getSales(id) {
       const { data } = await axios
-        .get('http://localhost:3002/sales/:id', {
+        .get(`http://localhost:3002/sales/${id}`, {
           headers: {
             authorization: accessToken.token,
           },
@@ -32,17 +32,17 @@ export default function ProductsDetails() {
       setSales(data);
     }
     getSales();
-  }, []); */
+  }, []);
 
-  function verCarrinho() {
+/*   function verCarrinho() {
     const value = cart.reduce((acc, product) => acc + product.qtd * product.price, 0);
     serValorTotal(value.toFixed(2));
     return value;
-  }
+  } */
 
-  useEffect(() => {
+/*   useEffect(() => {
     verCarrinho();
-  }, [cart]);
+  }, []); */
 
   return (
     <div>

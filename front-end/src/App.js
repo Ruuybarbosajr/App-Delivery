@@ -7,6 +7,7 @@ import Products from './pages/Products';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import ProviderCart from './context/ProviderCart';
+import AuthToken from './components/AuthToken';
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
           path="/customer/products"
           element={
             <ProviderCart>
-              <Products />
+              <AuthToken>
+                <Products />
+              </AuthToken>
             </ProviderCart>
           }
         />
@@ -27,7 +30,9 @@ function App() {
           path="/customer/checkout"
           element={
             <ProviderCart>
-              <Checkout />
+              <AuthToken>
+                <Checkout />
+              </AuthToken>
             </ProviderCart>
           }
         />

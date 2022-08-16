@@ -13,12 +13,14 @@ export default function ProductsCards({ p }) {
 
   useEffect(() => {
     const { price, name, id } = p;
-    const isInsertedInCart = cart.products.find((product) => product.id === id);
     const bodyProduct = { price, id, name, qtd };
-
-    if (isInsertedInCart || qtd) {
-      setCart((prev) => ({ ...prev, products: addItem(prev.products, id, bodyProduct) }));
-    } else setCart((prev) => ({ ...prev, products: removeItem(prev.products, id) }));
+    if (qtd) {
+      setCart((prev) => (
+        { ...prev, products: addItem(prev.products, id, bodyProduct) }));
+    } else {
+      setCart((prev) => (
+        { ...prev, products: removeItem(prev.products, id) }));
+    }
   }, [qtd]);
 
   return (

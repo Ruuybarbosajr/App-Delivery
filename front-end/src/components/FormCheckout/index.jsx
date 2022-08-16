@@ -8,7 +8,6 @@ export default function FormCheckout() {
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
   const [sellers, setSellers] = useState([]);
-  const accessToken = JSON.parse(localStorage.getItem('user'));
 
   const [sale, setSale] = useState({
     sellerId: '',
@@ -20,7 +19,7 @@ export default function FormCheckout() {
     try {
       const getSellers = await axios.get('http://localhost:3001/user/seller/all', {
         headers: {
-          authorization: accessToken.token,
+          authorization: JSON.parse(localStorage.getItem('user'))?.token,
         },
       });
 
@@ -38,7 +37,7 @@ export default function FormCheckout() {
       ...sale, products, totalPrice,
     }, {
       headers: {
-        authorization: accessToken.token,
+        authorization: JSON.parse(localStorage.getItem('user'))?.token,
       },
     });
     navigate(`/customer/orders/${data}`);

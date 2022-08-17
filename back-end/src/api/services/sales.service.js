@@ -12,7 +12,7 @@ const getAllSales = async (queryConfig = {}) => Sale.findAll({
   include: [
     { model: User, as: 'user', attributes: { exclude: ['password'] } },
     { model: User, as: 'seller', attributes: { exclude: ['password', 'email', 'role'] } },
-    { model: Product, as: 'products', through: { attributes: [] } },
+    { model: Product, as: 'products', through: { attributes: ['quantity'] } },
   ],
   attributes: { exclude: ['userId', 'sellerId'] },
 });

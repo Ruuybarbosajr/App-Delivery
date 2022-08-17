@@ -47,6 +47,16 @@ function App() {
             </ProviderCart>
           }
         />
+        <Route
+          path="/seller/orders/:id"
+          element={
+            <ProviderCart>
+              <AuthToken>
+                <OrderDetails />
+              </AuthToken>
+            </ProviderCart>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

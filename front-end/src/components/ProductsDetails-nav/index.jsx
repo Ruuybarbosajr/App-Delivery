@@ -1,63 +1,84 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import styles from '../Header/index.module.css';
+import { useContext, useState } from 'react';
+import UserContext from '../../context/UserContext';
 
 const axios = require('axios');
 
 export default function ProductDetailsNav({ element }) {
-  const dataId = 'customer_order_details__element-order-details-label-delivery-status';
   const [status, setStatus] = useState(element.status);
+  const { userData: { role } } = useContext(UserContext);
 
-  async function updateStatus() {
+  async function updateStatus(saleStatus) {
     try {
-      const accessToken = JSON.parse(localStorage.getItem('user'));
-      await axios.patch(`http://localhost:3001/sales/${element.id}/update`, { status: 'Entregue' }, {
+      await axios.patch(`http://localhost:3001/sales/${element.id}/update`, { status: saleStatus }, {
         headers: {
-          authorization: accessToken.token,
+          authorization: JSON.parse(localStorage.getItem('user'))?.token,
         } });
-      setStatus('Entregue');
+      setStatus(saleStatus);
     } catch (error) {
       console.error(error);
     }
   }
+
+  function buildButton(otherStatus, diffOf, title) {
+    return (
+      <button
+        type="button"
+        disabled={ status !== diffOf }
+        data-testid={ `${role}_order_details__button-delivery-check` }
+        onClick={ () => updateStatus(otherStatus) }
+      >
+        {title}
+      </button>
+    );
+  }
+
+  const roleValidation = {
+    customer: () => buildButton('Entregue', 'Em Trânsito', ' MARCAR COMO ENTREGUE'),
+    seller: () => buildButton('Em Trânsito', 'Preparando', 'SAIU PARA ENTREGA'),
+  };
+
   return (
     <div>
-      <nav className={ styles.navbar }>
-        <p
-          data-testid="customer_order_details__element-order-details-label-order-id"
-        >
-          {element.id}
-        </p>
-        <p
-          data-testid="customer_order_details__element-order-details-label-seller-name"
-        >
-          P. Vend:
-          {element.seller.name}
-        </p>
-        <p
-          data-testid="customer_order_details__element-order-details-label-order-date"
-        >
-          {element.saleDate.split('-')[2].slice(0, 2)}
-          /
-          {element.saleDate.split('-')[1]}
-          /
-          {element.saleDate.split('-')[0]}
-        </p>
-        <p
-          data-testid={ dataId }
-        >
-          {status}
-
-        </p>
+      <p
+        data-testid={ `${role}_order_details__element-order-details-label-order-id` }
+      >
+        {element.id}
+      </p>
+      <p
+        data-testid={ `${role}_order_details__element-order-details-label-seller-name` }
+      >
+        P. Vend:
+        {element.seller.name}
+      </p>
+      <p
+        data-testid={ `${role}_order_details__element-order-details-label-order-date` }
+      >
+        {element.saleDate.split('-')[2].slice(0, 2)}
+        /
+        {element.saleDate.split('-')[1]}
+        /
+        {element.saleDate.split('-')[0]}
+      </p>
+      <p
+        data-testid={
+          `${role}_order_details__element-order-details-label-delivery-status`
+        }
+      >
+        {status}
+      </p>
+      {roleValidation[role]()}
+      {role === 'seller'
+      && (
         <button
           type="button"
-          disabled={ status !== 'Em Trânsito' }
-          data-testid="customer_order_details__button-delivery-check"
-          onClick={ () => updateStatus() }
+          disabled={ status !== 'Pendente' }
+          data-testid={ `${role}_order_details__button-delivery-check` }
+          onClick={ () => updateStatus('Preparando') }
         >
-          MARCAR COMO ENTREGUE
+          PREPARAR PEDIDO
         </button>
-      </nav>
+      )}
     </div>
   );
 }
@@ -65,7 +86,7 @@ export default function ProductDetailsNav({ element }) {
 ProductDetailsNav.propTypes = {
   element: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    totalPrice: PropTypes.number.isRequired,
+    totalPrice: PropTypes.string.isRequired,
     deliveryAddress: PropTypes.string.isRequired,
     deliveryNumber: PropTypes.string.isRequired,
     saleDate: PropTypes.string.isRequired,

@@ -11,7 +11,9 @@ module.exports = {
     const { id, name, email, password, role } = findUser;
     const encryptedPassword = md5(loginData.password);
 
-    if (encryptedPassword !== password) throw generateError(400, 'Parece que bebeu muito, pois esqueceu sua senha');
+    if (encryptedPassword !== password) { 
+      throw generateError(400, 'Parece que bebeu muito, pois esqueceu sua senha'); 
+    }
 
     const payload = {
       id,

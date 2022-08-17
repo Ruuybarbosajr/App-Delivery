@@ -8,7 +8,7 @@ const schemaRole = require('../../schemas/roleValidation');
 module.exports = {
   async create(name, email, password, role) {
     const findUser = await User.findOne({ where: { [Op.or]: [{ email }, { name }] } });
-    if (findUser) throw generateError(409, 'user already exist');
+    if (findUser) throw generateError(409, 'Cachaceiro(a) já está cadastrado');
 
     const encryptedPassword = md5(password);
     const roleVerified = schemaRole(role);

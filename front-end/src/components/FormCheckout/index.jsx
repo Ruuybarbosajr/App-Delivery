@@ -32,15 +32,20 @@ export default function FormCheckout() {
   }
 
   async function getId() {
-    const { products, totalPrice } = cart;
-    const { data } = await axios.post('http://localhost:3001/sales/register', {
-      ...sale, products, totalPrice,
-    }, {
-      headers: {
-        authorization: JSON.parse(localStorage.getItem('user'))?.token,
-      },
-    });
-    navigate(`/customer/orders/${data}`);
+    try {
+      const { products, totalPrice } = cart;
+      const { data } = await axios.post('http://localhost:3001/sales/register', {
+        ...sale, products, totalPrice,
+      }, {
+        headers: {
+          authorization: JSON.parse(localStorage.getItem('user'))?.token,
+        },
+      });
+      navigate(`/customer/orders/${data}`);
+      localStorage.setItem('cart', JSON.stringify({ products: [], totalPrice: '0.00' }));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 
@@ -37,6 +37,11 @@ function Login() {
       setMessageError(message);
     }
   };
+
+  useEffect(() => {
+    console.log(JSON.parse(localStorage.getItem('user'))?.token);
+    if (JSON.parse(localStorage.getItem('user'))?.token) navigate('/customer/products');
+  }, []);
 
   return (
     <div>

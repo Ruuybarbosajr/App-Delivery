@@ -23,7 +23,7 @@ module.exports = {
 
     const findSeller = await User.findOne({ where: { id: sellerId, role: 'seller' } });
 
-    if (!findSeller) throw generateError(404, 'seller not found');
+    if (!findSeller) throw generateError(404, 'Vendedor(a) não encontrado(a)');
     
     const newSaleId = await sequelize.transaction(async (transaction) => {
       const newSale = await Sale.create(
@@ -41,10 +41,10 @@ module.exports = {
 
   async findOne(id, user) {
     const [findSale] = await getAllSales({ where: { id } });
-    if (!findSale) throw generateError(404, 'sale not found');
+    if (!findSale) throw generateError(404, 'Venda não encontrada');
 
     const isValidUser = permissionToCheck(user, findSale.dataValues);
-    if (!isValidUser) throw generateError(401, 'not authorized');
+    if (!isValidUser) throw generateError(401, 'Não autorizado');
     
     return findSale;
   },

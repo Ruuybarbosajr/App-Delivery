@@ -1,7 +1,7 @@
 const schemaNewSale = require('../../schemas/newSaleBody');
 const generateError = require('../../utils/generateError');
 
-module.exports = (req, res, next) => {
+module.exports = (req, _res, next) => {
   const { sellerId, totalPrice, deliveryAddress, deliveryNumber, products } = req.body;
   const { error } = schemaNewSale.validate(
     { sellerId, totalPrice, deliveryAddress, deliveryNumber, products },

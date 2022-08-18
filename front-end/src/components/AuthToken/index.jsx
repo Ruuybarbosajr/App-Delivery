@@ -5,7 +5,7 @@ export default function AuthToken({ children }) {
   const authorization = JSON.parse(localStorage.getItem('user'))?.token;
 
   // useEffect(() => {
-
+  //   const authorization = JSON.parse(localStorage.getItem('user'))?.token;
   // }, []);
 
   return (

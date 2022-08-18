@@ -9,7 +9,7 @@ function Header() {
 
   function buildLink(role, location, title) {
     return (
-      <div data-testid="customer_products__element-navbar-link-products">
+      <div data-testid={ `customer_products__element-navbar-link-${location}` }>
         <Link to={ `/${role}/${location}` }>{title}</Link>
       </div>
     );

@@ -21,11 +21,14 @@ export default function ProductDetailsNav({ element }) {
   }
 
   function buildButton(otherStatus, diffOf, title) {
+    const dataTestId = role === 'seller'
+      ? 'seller_order_details__button-dispatch-check'
+      : 'customer_order_details__button-delivery-check';
     return (
       <button
         type="button"
         disabled={ status !== diffOf }
-        data-testid={ `${role}_order_details__button-delivery-check` }
+        data-testid={ dataTestId }
         onClick={ () => updateStatus(otherStatus) }
       >
         {title}
@@ -73,7 +76,7 @@ export default function ProductDetailsNav({ element }) {
         <button
           type="button"
           disabled={ status !== 'Pendente' }
-          data-testid={ `${role}_order_details__button-delivery-check` }
+          data-testid="seller_order_details__button-preparing-check"
           onClick={ () => updateStatus('Preparando') }
         >
           PREPARAR PEDIDO

@@ -1,6 +1,13 @@
-import { useEffect, useContext, useState } from 'react';
+/* eslint-disable react/no-multi-comp */
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SnackbarProvider, useSnackbar } from 'notistack';
 import UserContext from '../../context/UserContext';
+import 'animate.css';
+import style from './style.module.css';
 
 const axios = require('axios');
 
@@ -8,16 +15,17 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [erro, setErro] = useState(false);
-  const [messageError, setMessageError] = useState('');
+  const [messageError, setMessageError] = useState(null);
   const { setUserData } = useContext(UserContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   const emailRegex = /\S+@\S+\.\S+/;
   const validEmail = emailRegex.test(email);
   const minPassword = 6;
   const disable = !(validEmail && password.length >= minPassword);
 
-  const submit = async () => {
+  const submit = async (event) => {
+    event.preventDefault();
     try {
       const port = process.env.REACT_APP_PORT_BACK;
       const login = await axios.post(`http://localhost:${port}/login`, {
@@ -32,66 +40,75 @@ function Login() {
       if (role === 'seller') navigate('/seller/orders');
       if (role === 'administrator') navigate('/admin/manage');
     } catch (error) {
-      setErro(true);
       const { message } = error.response.data;
+      enqueueSnackbar(message, { variant: 'error' });
       setMessageError(message);
     }
   };
 
-  useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem('user'))?.token);
-    if (JSON.parse(localStorage.getItem('user'))?.token) navigate('/customer/products');
-  }, []);
-
   return (
-    <div>
-      <h1>é us guri</h1>
-
-      <form>
-        <label htmlFor="login">
-          Login:
-          <input
-            type="text"
-            data-testid="common_login__input-email"
-            value={ email }
-            placeholder="Digite seu email aqui"
-            onChange={ (e) => setEmail(e.target.value) }
-          />
-        </label>
-
-        <label htmlFor="password">
-          Senha:
-          <input
-            type="text"
-            data-testid="common_login__input-password"
-            value={ password }
-            onChange={ (e) => setPassword(e.target.value) }
-          />
-        </label>
-
-        <button
-          type="button"
-          data-testid="common_login__button-login"
-          disabled={ disable }
-          onClick={ () => submit() }
+    <div className={ style.container__body }>
+      <img
+        className={ `${style.logo} animate__animated animate__bounceInDown` }
+        src="https://guridelivery.com.br/wp-content/uploads/2021/03/GURI-LOGO-e1617919707927-1024x468.png"
+        alt="logo"
+      />
+      <div className={ style.container__login }>
+        <Box
+          component="form"
+          sx={ {
+            '& .MuiTextField-root': { m: 1, width: '40ch' },
+          } }
+          noValidate
+          className={ style.container__form }
+          autoComplete="off"
+          onSubmit={ submit }
         >
-          Login
-        </button>
-        <button
-          type="button"
-          data-testid="common_login__button-register"
-          onClick={ () => navigate('/register') }
-        >
-          Ainda não tenho conta
-        </button>
-        {erro && (
-          <p data-testid="common_login__element-invalid-email">
-            {messageError}
-          </p>
-        )}
-      </form>
+          <div className={ style.container__inputs }>
+            <TextField
+              error={ messageError }
+              value={ email }
+              label="Email"
+              type="Error"
+              onChange={ (e) => setEmail(e.target.value) }
+            />
+            <TextField
+              error={ messageError }
+              value={ password }
+              type="password"
+              onChange={ (e) => setPassword(e.target.value) }
+              label="Senha"
+            />
+          </div>
+          <div className={ style.container__buttons }>
+            <Button
+              className={ style.button__enter }
+              variant="contained"
+              size="medium"
+              disabled={ disable }
+              type="submit"
+            >
+              Entrar
+            </Button>
+            <Button
+              className={ style.button__enter }
+              variant="contained"
+              size="medium"
+              onClick={ () => navigate('/register') }
+            >
+              Registrar
+            </Button>
+          </div>
+        </Box>
+      </div>
     </div>
   );
 }
 
-export default Login;
+export default function IntergrationNotistack() {
+  return (
+    <SnackbarProvider maxSnack={ 3 }>
+      <Login />
+    </SnackbarProvider>
+  );
+}

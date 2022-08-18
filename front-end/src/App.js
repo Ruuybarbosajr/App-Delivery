@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import ProviderCart from './context/ProviderCart';
 import AuthToken from './components/AuthToken';
+import Order from './pages/Order';
 
 function App() {
   return (
@@ -17,6 +18,16 @@ function App() {
         <Route path="/" element={ <Navigate replace to="/login" /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
+        <Route
+          path="/customer/orders"
+          element={
+            <ProviderCart>
+              <AuthToken>
+                <Order />
+              </AuthToken>
+            </ProviderCart>
+          }
+        />
         <Route
           path="/customer/orders/:id"
           element={

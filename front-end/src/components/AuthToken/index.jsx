@@ -2,7 +2,11 @@ import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function AuthToken({ children }) {
-  const authorization = localStorage.getItem('user');
+  const authorization = JSON.parse(localStorage.getItem('user'))?.token;
+
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     !authorization ? <Navigate to="../login" /> : children

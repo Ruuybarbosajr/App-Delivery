@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import UserContext from '../../context/UserContext';
 import 'animate.css';
-import './index.css';
+import style from './style.module.css';
 
 const axios = require('axios');
 
@@ -47,27 +47,26 @@ function Login() {
   };
 
   return (
-    <div className="container__body">
+    <div className={ style.container__body }>
       <img
-        className="logo animate__animated animate__bounceInDown"
+        className={ `${style.logo} animate__animated animate__bounceInDown` }
         src="https://guridelivery.com.br/wp-content/uploads/2021/03/GURI-LOGO-e1617919707927-1024x468.png"
         alt="logo"
       />
-      <div className="container__login">
+      <div className={ style.container__login }>
         <Box
           component="form"
           sx={ {
             '& .MuiTextField-root': { m: 1, width: '40ch' },
           } }
           noValidate
-          className="container__form"
+          className={ style.container__form }
           autoComplete="off"
           onSubmit={ submit }
         >
-          <div className="container__inputs">
+          <div className={ style.container__inputs }>
             <TextField
               error={ messageError }
-              id="demo-helper-text-misaligned"
               value={ email }
               label="Email"
               type="Error"
@@ -75,16 +74,15 @@ function Login() {
             />
             <TextField
               error={ messageError }
-              id="demo-helper-text-misaligned"
               value={ password }
               type="password"
               onChange={ (e) => setPassword(e.target.value) }
               label="Senha"
             />
           </div>
-          <div className="container__buttons">
+          <div className={ style.container__buttons }>
             <Button
-              className="button__enter"
+              className={ style.button__enter }
               variant="contained"
               size="medium"
               disabled={ disable }
@@ -93,7 +91,7 @@ function Login() {
               Entrar
             </Button>
             <Button
-              className="button__register"
+              className={ style.button__enter }
               variant="contained"
               size="medium"
               onClick={ () => navigate('/register') }

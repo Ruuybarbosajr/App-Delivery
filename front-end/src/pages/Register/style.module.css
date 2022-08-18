@@ -1,0 +1,61 @@
+.container__body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(rgb(249, 236, 187) 56%, rgb(247, 210, 151))
+}
+
+.container__login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 50%;
+}
+
+.container__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.082);
+  padding: 30px 50px;
+  border-radius: 10px;
+}
+
+.logo {
+  filter: brightness(0);
+  width: 20%;
+}
+
+.container__inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container__buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
+  gap: 10px;
+}
+.container__buttons a {
+  text-align: center;
+  text-decoration: none;
+  color: #000000;
+}
+
+.button__enter:disabled {
+  opacity: 0.5;
+  color: white !important;
+}
+
+.button__enter {
+  background-color: #484351 !important;
+  color: white !important;
+}

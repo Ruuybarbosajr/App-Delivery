@@ -1,8 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GiShoppingCart } from 'react-icons/gi';
 import Header from '../../components/Header';
 import ProductsCards from '../../components/ProductsCards';
 import CartContext from '../../context/CartContext';
+import configPrice from '../../helpers/configPrice';
+import style from './style.module.css';
 
 const axios = require('axios');
 
@@ -31,25 +34,22 @@ export default function ProductsWide() {
   return (
     <div>
       <Header />
-      {prod.length > 0 ? (
-        prod.map((product) => (
-          <ProductsCards p={ product } key={ product.id } />
-        ))
-      ) : (
-        <div>Carregando</div>
-      )}
-
-      <button
-        disabled={ !cart.products.length }
-        onClick={ () => navigate('/customer/checkout') }
-        data-testid="customer_products__button-cart"
-        type="button"
-      >
-        Ver carrinho:
-        <span data-testid="customer_products__checkout-bottom-value">
-          {cart.totalPrice.replace('.', ',')}
-        </span>
-      </button>
+      <div className={ style.container__body_products }>
+        <div className={ style.container__products }>
+          {prod.map((product) => (<ProductsCards p={ product } key={ product.id } />))}
+        </div>
+        <button
+          className={ style.button__cart }
+          disabled={ !cart.products.length }
+          onClick={ () => navigate('/customer/checkout') }
+          type="button"
+        >
+          <GiShoppingCart />
+          <span>
+            {configPrice(cart.totalPrice)}
+          </span>
+        </button>
+      </div>
     </div>
   );
 }

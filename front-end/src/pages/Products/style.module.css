@@ -1,0 +1,38 @@
+.container__products {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 30px;
+}
+
+.container__body_products {
+  position: relative;
+}
+.button__cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  width: 210px;
+  height: 50px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #e8cd02;
+  border: none;
+  color: #3E3E3E;
+  padding: 10px 35px;
+  border-radius: 7px;
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.252);
+  cursor: pointer;
+}
+.button__cart span {
+  font-size: 20px;
+  margin-left: 5px;
+}
+
+.button__cart:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

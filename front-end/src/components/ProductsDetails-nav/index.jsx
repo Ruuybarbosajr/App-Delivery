@@ -1,5 +1,10 @@
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
+import TableHea from '@mui/material/TableHead';
+import Table from '@mui/material/Table';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import style from './index.module.css';
 import UserContext from '../../context/UserContext';
 
 const axios = require('axios');
@@ -42,47 +47,52 @@ export default function ProductDetailsNav({ element }) {
   };
 
   return (
-    <div>
-      <p
-        data-testid={ `${role}_order_details__element-order-details-label-order-id` }
-      >
-        {element.id}
-      </p>
-      <p
-        data-testid={ `${role}_order_details__element-order-details-label-seller-name` }
-      >
-        P. Vend:
-        {element.seller.name}
-      </p>
-      <p
-        data-testid={ `${role}_order_details__element-order-details-label-order-date` }
-      >
-        {element.saleDate.split('-')[2].slice(0, 2)}
-        /
-        {element.saleDate.split('-')[1]}
-        /
-        {element.saleDate.split('-')[0]}
-      </p>
-      <p
-        data-testid={
-          `${role}_order_details__element-order-details-label-delivery-status`
-        }
-      >
-        {status}
-      </p>
-      {roleValidation[role]()}
-      {role === 'seller'
+    <Table sx={ { minWidth: 650 } } size="small" aria-label="a dense table">
+      <TableHea>
+        <TableRow sx={ { '&:last-child td, &:last-child th': { border: -1 } } }>
+          <TableCell
+            data-testid={ `${role}_order_details__element-order-details-label-order-id` }
+          >
+            {element.id}
+          </TableCell>
+          <TableCell>
+            P. Vend:
+            {element.seller.name}
+          </TableCell>
+          <TableCell>
+            {element.saleDate.split('-')[2].slice(0, 2)}
+            /
+            {element.saleDate.split('-')[1]}
+            /
+            {element.saleDate.split('-')[0]}
+          </TableCell>
+          <TableCell
+            data-testid={
+              `${role}_order_details__element-order-details-label-delivery-status`
+            }
+          >
+            {status}
+          </TableCell>
+          {roleValidation[role]()}
+          {role === 'seller'
       && (
-        <button
-          type="button"
-          disabled={ status !== 'Pendente' }
-          data-testid="seller_order_details__button-preparing-check"
-          onClick={ () => updateStatus('Preparando') }
-        >
-          PREPARAR PEDIDO
-        </button>
+        <TableCell>
+          <button
+            type="button"
+            disabled={ status !== 'Pendente' }
+            data-testid="seller_order_details__button-preparing-check"
+            onClick={ () => updateStatus('Preparando') }
+            className={ style.container__button }
+          >
+            PREPARAR PEDIDO
+          </button>
+        </TableCell>
       )}
-    </div>
+        </TableRow>
+
+      </TableHea>
+    </Table>
+
   );
 }
 

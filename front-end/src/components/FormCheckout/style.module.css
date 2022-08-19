@@ -1,0 +1,9 @@
+ .container__form {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.082);
+    padding: 50px 45px;
+    border-radius: 15px;
+    justify-content: space-around;
+  }

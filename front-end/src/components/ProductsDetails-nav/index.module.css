@@ -1,0 +1,12 @@
+.container__button button {
+    background-color: #46c442;
+    border: none;
+    color: #3E3E3E;
+    font-size: 18px;
+    padding: 10px 35px;
+    border-radius: 7px;
+    box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.098);
+  }
+  .container__button button:hover {
+    cursor: pointer;
+  }

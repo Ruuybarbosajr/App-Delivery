@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import { useLocation } from 'react-router-dom';
 import CartContext from '../../context/CartContext';
 import UserContext from '../../context/UserContext';
@@ -14,36 +17,41 @@ export default function TableRows(props) {
     setCart((prev) => ({ ...prev, products: removeItem(prev.products, productId) }));
   }
   return (
-    <tbody>
-      <tr>
-        <td
+    <TableBody>
+      <TableRow sx={ { '&:last-child td, &:last-child th': { border: -1 } } }>
+        <TableCell
           data-testid={ `${role}_${dataTestId}__element-order-table-item-number-${i}` }
+          align="center"
         >
           {i + 1}
-        </td>
-        <td
+        </TableCell>
+        <TableCell
           data-testid={ `${role}_${dataTestId}__element-order-table-name-${i}` }
+          align="center"
         >
           {name}
-        </td>
-        <td
+        </TableCell>
+        <TableCell
           data-testid={ `${role}_${dataTestId}__element-order-table-quantity-${i}` }
+          align="center"
         >
           {qtd}
-        </td>
-        <td
+        </TableCell>
+        <TableCell
           data-testid={ `${role}_${dataTestId}__element-order-table-unit-price-${i}` }
+          align="center"
         >
           {price.replace('.', ',')}
-        </td>
-        <td
+        </TableCell>
+        <TableCell
           data-testid={ `${role}_${dataTestId}__element-order-table-sub-total-${i}` }
+          align="center"
         >
           {(qtd * price).toFixed(2).replace('.', ',')}
-        </td>
+        </TableCell>
         {pathname.includes('checkout')
         && (
-          <td>
+          <TableCell align="center">
             <button
               data-testid={ `${role}_${dataTestId}__element-order-table-remove-${i}` }
               type="button"
@@ -51,9 +59,9 @@ export default function TableRows(props) {
             >
               Remover
             </button>
-          </td>) }
-      </tr>
-    </tbody>
+          </TableCell>) }
+      </TableRow>
+    </TableBody>
   );
 }
 TableRows.propTypes = {

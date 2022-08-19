@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import style from './style.module.css';
 import CartContext from '../../context/CartContext';
 
 const axios = require('axios');
@@ -53,7 +54,7 @@ export default function FormCheckout() {
   }, []);
 
   return (
-    <form>
+    <form className={ style.container__form }>
       <h1>Detalhes e endereço para entrega</h1>
       <label htmlFor="seller">
         P.Vendedora Responsável:

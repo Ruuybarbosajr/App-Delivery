@@ -1,0 +1,10 @@
+.button__remove {
+  border: none;
+  background-color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.button__remove:hover {
+  color: red;
+}

@@ -4,9 +4,11 @@ import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import { useLocation } from 'react-router-dom';
+import { BiTrash } from 'react-icons/bi';
 import CartContext from '../../context/CartContext';
 import UserContext from '../../context/UserContext';
 import removeItem from '../../helpers/removeItem';
+import style from './style.module.css';
 
 export default function TableRows(props) {
   const { i, id, name, qtd, price, dataTestId } = props;
@@ -53,11 +55,12 @@ export default function TableRows(props) {
         && (
           <TableCell align="center">
             <button
+              className={ style.button__remove }
               data-testid={ `${role}_${dataTestId}__element-order-table-remove-${i}` }
               type="button"
               onClick={ () => remove(id) }
             >
-              Remover
+              <BiTrash />
             </button>
           </TableCell>) }
       </TableRow>

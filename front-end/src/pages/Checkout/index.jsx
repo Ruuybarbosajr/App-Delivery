@@ -6,7 +6,6 @@ export default function CheckoutWide() {
   return (
     <>
       <Header />
-      <h1>Finalizar pedido:</h1>
       <TableCheckout />
       <FormCheckout />
     </>

@@ -1,0 +1,24 @@
+.container__table {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 100px;
+  margin-top: 20px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.141);
+}
+
+.container__title {
+  text-align: center;
+}
+
+.container__button {
+  padding: 20px;
+  display: flex;
+  justify-content: end;
+}
+
+.container__button button {
+  border: none;
+  background-color: #FFFFFF;
+  font-size: 18px;
+  padding-top: 20px;
+}

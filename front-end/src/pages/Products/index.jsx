@@ -8,22 +8,22 @@ const axios = require('axios');
 
 export default function ProductsWide() {
   const navigate = useNavigate();
-  // console.log(CartContext);
-  // const p = useContext(CartContext);
-  // console.log(p);
   const { cart } = useContext(CartContext);
-  const accessToken = JSON.parse(localStorage.getItem('user'));
   const [prod, setProducts] = useState([]);
 
   useEffect(() => {
     async function getProducts() {
-      const { data } = await axios
-        .get('http://localhost:3001/products', {
-          headers: {
-            authorization: accessToken.token,
-          },
-        });
-      setProducts(data);
+      try {
+        const { data } = await axios
+          .get('http://localhost:3001/products', {
+            headers: {
+              authorization: JSON.parse(localStorage.getItem('user'))?.token,
+            },
+          });
+        setProducts(data);
+      } catch (error) {
+        console.error(error);
+      }
     }
     getProducts();
   }, []);

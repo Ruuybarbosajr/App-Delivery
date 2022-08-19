@@ -1,55 +1,85 @@
-import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Avatar } from '@mui/material';
 import UserContext from '../../context/UserContext';
-import styles from './index.module.css';
+import style from './index.module.css';
+import logo from '../../images/logo(1).png';
 
 function Header() {
-  const { userData } = useContext(UserContext);
+  const { userData: { role, name } } = useContext(UserContext);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [titleButton, setTitleButton] = useState('Produtos');
+  const [path, setPath] = useState('/customer/products');
 
-  function buildLink(role, location, title) {
-    return (
-      <div data-testid={ `customer_products__element-navbar-link-${location}` }>
-        <Link to={ `/${role}/${location}` }>{title}</Link>
-      </div>
-    );
-  }
-
-  const roleValidation = {
-    customer: () => buildLink(userData.role, 'products', 'PRODUTOS'),
-    seller: () => buildLink(userData.role, 'orders', 'PEDIDOS'),
-    administrator: () => buildLink('admin', 'orders', 'GERENCIAR USUÁRIOS'),
-  };
+  useEffect(() => {
+    if (role !== 'customer' && role) {
+      setTitleButton('Pedidos');
+      setPath('/seller/orders');
+    }
+  }, [role]);
 
   function logout() {
     localStorage.removeItem('user');
     navigate('/login');
   }
 
+  function stringAvatar(parameterName = 'avatar seila') {
+    const first = parameterName.split(' ')[0][0];
+    const second = parameterName.split(' ')[1] ? parameterName.split(' ')[1][0] : '';
+    return {
+      sx: {
+        bgcolor: '#3E3E3E;',
+      },
+      children: `${first.toUpperCase()}${second.toUpperCase()}`,
+    };
+  }
+
   return (
-    <header>
-      <nav className={ styles.navbar }>
-
-        {userData.role && roleValidation[userData.role]()}
-
-        { userData?.role === 'customer'
-        && (
-          <div data-testid="customer_products__element-navbar-link-orders">
-            <Link to="/customer/orders">MEUS PEDIDOS</Link>
-          </div>)}
-
-        <div data-testid="customer_products__element-navbar-user-full-name">
-          <span>{ userData.name }</span>
+    <header className={ style.container__header }>
+      <div className={ style.container__links }>
+        <div className={ style.container__logo }>
+          <img
+            src={ logo }
+            alt="logo"
+          />
         </div>
-
-        <button
-          type="button"
-          data-testid="customer_products__element-navbar-link-logout"
-          onClick={ () => logout() }
+        <div
+          className={
+            `${style.container__link} ${pathname.includes(path)
+              ? style.sublime : ''}`
+          }
         >
-          Sair
-        </button>
-      </nav>
+          <Link
+            to={ path }
+          >
+            { titleButton }
+          </Link>
+        </div>
+        { role === 'customer'
+        && (
+          <div
+            className={
+              `${style.container__link} ${pathname.includes('orders')
+                ? style.sublime : ''}`
+            }
+          >
+            <Link to="/customer/orders">Meus Pedidos</Link>
+          </div>)}
+      </div>
+      <div className={ style.container__logout }>
+        <div className={ style.container__name }>
+          <Avatar className={ style.avatar } { ...stringAvatar(name) } />
+        </div>
+        <div className={ style.container__button }>
+          <button
+            type="button"
+            onClick={ () => logout() }
+          >
+            Sair
+          </button>
+        </div>
+      </div>
     </header>
   );
 }

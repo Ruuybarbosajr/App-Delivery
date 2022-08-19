@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import CartContext from '../../context/CartContext';
 import addItem from '../../helpers/addItem';
 import removeItem from '../../helpers/removeItem';
+import style from './style.module.css';
+import configPrice from '../../helpers/configPrice';
 
 export default function ProductsCards({ p }) {
   const { setCart, cart } = useContext(CartContext);
@@ -24,40 +26,43 @@ export default function ProductsCards({ p }) {
   }, [qtd]);
 
   return (
-    <div className="Class">
-      <div>
-        <p data-testid={ `customer_products__element-card-price-${p.id}` }>
-          {p.price.replace('.', ',')}
-        </p>
+    <div className={ style.container__card }>
+      <div className={ style.container__image }>
         <img
           width="100px"
           className="imagem"
-          data-testid={ `customer_products__img-card-bg-image-${p.id}` }
           src={ p.url_image }
           alt={ p.name }
         />
-
-        <p data-testid={ `customer_products__element-card-title-${p.id}` }>
+      </div>
+      <div className={ style.container__name }>
+        <p>
           {p.name}
         </p>
+      </div>
+      <div className={ style.container__price }>
+        <p>
+          {configPrice(p.price)}
+        </p>
+      </div>
+      <div className={ style.container__alter_quantity }>
         <button
-          data-testid={ `customer_products__button-card-rm-item-${p.id}` }
           type="button"
+          className={ style.button__sub }
           onClick={ () => setQtd((prev) => prev - 1) }
           disabled={ !qtd }
         >
           -
         </button>
         <input
-          data-testid={ `customer_products__input-card-quantity-${p.id}` }
           placeholder="0"
           value={ qtd }
-          type="number"
+          type="text"
           min="0"
           onChange={ (e) => setQtd(Number(e.target.value)) }
         />
         <button
-          data-testid={ `customer_products__button-card-add-item-${p.id}` }
+          className={ style.button__add }
           type="button"
           onClick={ () => setQtd((prev) => prev + 1) }
         >

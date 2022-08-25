@@ -1,12 +1,12 @@
 import FormCheckout from '../../components/FormCheckout';
 import Header from '../../components/Header/index';
-import TableCheckout from '../../components/TableCheckout';
+import TableOrder from '../../components/TableOrder';
 
 export default function CheckoutWide() {
   return (
     <>
       <Header />
-      <TableCheckout />
+      <TableOrder />
       <FormCheckout />
     </>
   );

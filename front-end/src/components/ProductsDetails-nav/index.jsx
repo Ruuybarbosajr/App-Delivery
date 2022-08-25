@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
-import TableHea from '@mui/material/TableHead';
-import Table from '@mui/material/Table';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
 import style from './index.module.css';
 import UserContext from '../../context/UserContext';
 
@@ -26,18 +22,17 @@ export default function ProductDetailsNav({ element }) {
   }
 
   function buildButton(otherStatus, diffOf, title) {
-    const dataTestId = role === 'seller'
-      ? 'seller_order_details__button-dispatch-check'
-      : 'customer_order_details__button-delivery-check';
     return (
-      <button
-        type="button"
-        disabled={ status !== diffOf }
-        data-testid={ dataTestId }
-        onClick={ () => updateStatus(otherStatus) }
-      >
-        {title}
-      </button>
+      <div>
+        <button
+          type="button"
+          className={ style.button_status }
+          disabled={ status !== diffOf }
+          onClick={ () => updateStatus(otherStatus) }
+        >
+          {title}
+        </button>
+      </div>
     );
   }
 
@@ -47,52 +42,66 @@ export default function ProductDetailsNav({ element }) {
   };
 
   return (
-    <Table sx={ { minWidth: 650 } } size="small" aria-label="a dense table">
-      <TableHea>
-        <TableRow sx={ { '&:last-child td, &:last-child th': { border: -1 } } }>
-          <TableCell
-            data-testid={ `${role}_order_details__element-order-details-label-order-id` }
-          >
-            {element.id}
-          </TableCell>
-          <TableCell>
-            P. Vend:
-            {element.seller.name}
-          </TableCell>
-          <TableCell>
-            {element.saleDate.split('-')[2].slice(0, 2)}
-            /
-            {element.saleDate.split('-')[1]}
-            /
-            {element.saleDate.split('-')[0]}
-          </TableCell>
-          <TableCell
-            data-testid={
-              `${role}_order_details__element-order-details-label-delivery-status`
-            }
-          >
-            {status}
-          </TableCell>
-          {roleValidation[role]()}
-          {role === 'seller'
+    <div className={ style.container__body }>
+      <div className={ style.container__title }>
+        <h1>Detalhes do pedido</h1>
+      </div>
+      <div className={ style.container__header }>
+        <div className={ style.container__data_sales }>
+          <div className={ style.container__info }>
+            <p>
+              COD:
+            </p>
+            <p>
+              {element.id}
+            </p>
+          </div>
+          <div className={ style.container__info }>
+            <p>
+              Pessoa Vendedora:
+            </p>
+            <p>
+              {element.seller.name}
+            </p>
+          </div>
+          <div className={ style.container__info }>
+            <p>
+              Data:
+            </p>
+            <p>
+              {element.saleDate.split('-')[2].slice(0, 2)}
+              /
+              {element.saleDate.split('-')[1]}
+              /
+              {element.saleDate.split('-')[0]}
+            </p>
+          </div>
+        </div>
+        <div className={ style.container__status }>
+          <div>
+            <p className={ style[status.replace(' ', '')] }>
+              {status}
+            </p>
+          </div>
+          <div className={ style.container__buttons_status }>
+            {roleValidation[role]()}
+            {role === 'seller'
       && (
-        <TableCell>
+        <div>
           <button
+            className={ style.button_status }
             type="button"
             disabled={ status !== 'Pendente' }
-            data-testid="seller_order_details__button-preparing-check"
             onClick={ () => updateStatus('Preparando') }
-            className={ style.container__button }
           >
             PREPARAR PEDIDO
           </button>
-        </TableCell>
+        </div>
       )}
-        </TableRow>
-
-      </TableHea>
-    </Table>
-
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

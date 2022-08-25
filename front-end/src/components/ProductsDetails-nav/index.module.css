@@ -1,12 +1,81 @@
-.container__button button {
-    background-color: #46c442;
-    border: none;
-    color: #3E3E3E;
-    font-size: 18px;
-    padding: 10px 35px;
-    border-radius: 7px;
-    box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.098);
-  }
-  .container__button button:hover {
-    cursor: pointer;
-  }
+.container__body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.104);
+  padding: 10px;
+  margin-bottom: 50px;
+}
+
+.container__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container__data_sales {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 40%;
+}
+
+.container__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 30%;
+}
+
+.container__info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.Pendente, .EmTrânsito, .Entregue, .Preparando {
+  font-weight: 500;
+  padding: 5px 30px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.114);
+}
+
+.Pendente {
+  background-color: #D9CA40;
+}
+
+.EmTrânsito {
+  background-color: #acb1bb;
+}
+
+.Entregue {
+  background-color: #40D9B4;
+}
+
+.Preparando {
+  background-color: #8CD940;
+}
+
+.container__title {
+  display: flex;
+  justify-content: center;
+}
+ 
+.button_status {
+  border: none;
+  background-color: #0B2B40;
+  color: white;
+  padding: 8px 30px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.229);
+  cursor: pointer;
+}
+
+.button_status:disabled {
+  opacity: 0.5;
+}
+
+.container__buttons_status {
+  display: flex;
+  gap: 10px;
+}

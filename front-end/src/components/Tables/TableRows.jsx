@@ -6,63 +6,47 @@ import TableCell from '@mui/material/TableCell';
 import { useLocation } from 'react-router-dom';
 import { BiTrash } from 'react-icons/bi';
 import CartContext from '../../context/CartContext';
-import UserContext from '../../context/UserContext';
 import removeItem from '../../helpers/removeItem';
 import style from './style.module.css';
 
 export default function TableRows(props) {
-  const { i, id, name, qtd, price, dataTestId } = props;
-  const { userData: { role } } = useContext(UserContext);
+  const { i, id, name, qtd, price } = props;
   const { pathname } = useLocation();
   const { setCart } = useContext(CartContext);
+
   function remove(productId) {
     setCart((prev) => ({ ...prev, products: removeItem(prev.products, productId) }));
   }
+
   return (
     <TableBody>
       <TableRow sx={ { '&:last-child td, &:last-child th': { border: -1 } } }>
-        <TableCell
-          data-testid={ `${role}_${dataTestId}__element-order-table-item-number-${i}` }
-          align="center"
-        >
+        <TableCell align="center">
           {i + 1}
         </TableCell>
-        <TableCell
-          data-testid={ `${role}_${dataTestId}__element-order-table-name-${i}` }
-          align="center"
-        >
+        <TableCell align="center">
           {name}
         </TableCell>
-        <TableCell
-          data-testid={ `${role}_${dataTestId}__element-order-table-quantity-${i}` }
-          align="center"
-        >
+        <TableCell align="center">
           {qtd}
         </TableCell>
-        <TableCell
-          data-testid={ `${role}_${dataTestId}__element-order-table-unit-price-${i}` }
-          align="center"
-        >
+        <TableCell align="center">
           {price.replace('.', ',')}
         </TableCell>
-        <TableCell
-          data-testid={ `${role}_${dataTestId}__element-order-table-sub-total-${i}` }
-          align="center"
-        >
-          {(qtd * price).toFixed(2).replace('.', ',')}
+        <TableCell align="center">
+          {(qtd * Number(price)).toFixed(2).replace('.', ',')}
         </TableCell>
         {pathname.includes('checkout')
         && (
           <TableCell align="center">
             <button
               className={ style.button__remove }
-              data-testid={ `${role}_${dataTestId}__element-order-table-remove-${i}` }
               type="button"
               onClick={ () => remove(id) }
             >
               <BiTrash />
             </button>
-          </TableCell>) }
+          </TableCell>)}
       </TableRow>
     </TableBody>
   );

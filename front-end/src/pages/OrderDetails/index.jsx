@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import ProductDetailsNav from '../../components/ProductsDetails-nav';
-import TabelaOrder from '../../components/TabelaOrder';
+import TableOrder from '../../components/TableOrder';
 
 const axios = require('axios');
 
@@ -20,7 +20,6 @@ export default function OrderDetails() {
               authorization: accessToken.token,
             },
           });
-        console.log(data);
         setSale(data);
       }
       getSales();
@@ -32,9 +31,8 @@ export default function OrderDetails() {
   return (
     <div>
       <Header />
-      <h1>Detalhes do pedido</h1>
       <ProductDetailsNav element={ sale } />
-      <TabelaOrder products={ sale.products } totalPrice={ sale.totalPrice } />
+      <TableOrder products={ sale.products } totalPrice={ Number(sale.totalPrice) } />
     </div>
   );
 }

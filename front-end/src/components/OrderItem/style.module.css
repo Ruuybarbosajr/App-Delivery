@@ -1,0 +1,72 @@
+.container__card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.395);
+  width: 250px;
+  align-items: center;
+  border-radius: 10px;
+  position: relative;
+  color: #303030;
+  cursor: pointer;
+}
+
+.Pendente {
+  background-color: #D9CA40;
+}
+
+.EmTrânsito {
+  background-color: #acb1bb;
+}
+
+.Entregue {
+  background-color: #40D9B4;
+}
+
+.Preparando {
+  background-color: #8CD940;
+}
+
+.container__cod {
+  position: absolute;
+  left: 10px;
+  top: 1px;
+  font-size: 12px;
+  font-weight: 700;
+  color: black;
+  margin: 5px 0 0 0;
+}
+
+.container__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 0;
+}
+
+.container__info > p {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.container__totalPrice {
+  font-size: 18px;
+  font-weight: 700;
+  color: black;
+  position: absolute;
+  right: 10px;
+  bottom: 1px;
+  margin: 0 0 5px 0;
+}
+
+.container__status {
+  text-align: center;
+  padding: 5px 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.413);
+}
+
+.container__data {
+  font-weight: 700;
+}

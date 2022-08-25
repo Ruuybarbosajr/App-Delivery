@@ -33,7 +33,7 @@ function FormCheckout() {
       const [seller] = getSellers.data;
       setSale((prev) => ({ ...prev, sellerId: seller.id }));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

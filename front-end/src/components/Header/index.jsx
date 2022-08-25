@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
+import { ImExit } from 'react-icons/im';
 import UserContext from '../../context/UserContext';
 import style from './index.module.css';
 import logo from '../../images/logo(1).png';
@@ -76,7 +77,8 @@ function Header() {
             type="button"
             onClick={ () => logout() }
           >
-            Sair
+            <ImExit />
+            <span>Sair</span>
           </button>
         </div>
       </div>

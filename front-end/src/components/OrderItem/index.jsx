@@ -2,23 +2,32 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
+import style from './style.module.css';
+import configPrice from '../../helpers/configPrice';
 
 export default function OrderItem({ id, status, data, totalPrice }) {
   const { userData: { role } } = useContext(UserContext);
+
   return (
-    <div>
-      <Link to={ `/${role}/orders/${id}` }>
-        <p data-testid={ `${role}_orders__element-order-id-${id}` }>
-          Pedido:
-          {id}
-        </p>
+    <Link
+      className={ `${style.container__card} ${style[status.replace(' ', '')]}` }
+      to={ `/${role}/orders/${id}` }
+    >
+      <p
+        className={ style.container__cod }
+      >
+        Cod:
+        {' '}
+        {id}
+      </p>
+      <div className={ style.container__info }>
         <p
-          data-testid={ `${role}_orders__element-delivery-status-${id}` }
+          className={ style.container__status }
         >
           {status}
         </p>
         <p
-          data-testid={ `${role}_orders__element-order-date-${id}` }
+          className={ style.container__data }
         >
           {data.split('-')[2].slice(0, 2)}
           /
@@ -26,14 +35,13 @@ export default function OrderItem({ id, status, data, totalPrice }) {
           /
           {data.split('-')[0]}
         </p>
-        <p
-          data-testid={ `${role}_orders__element-card-price-${id}` }
-        >
-          {totalPrice.replace('.', ',')}
-
-        </p>
-      </Link>
-    </div>
+      </div>
+      <p
+        className={ style.container__totalPrice }
+      >
+        {configPrice(totalPrice)}
+      </p>
+    </Link>
   );
 }
 

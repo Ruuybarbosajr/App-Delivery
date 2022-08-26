@@ -49,5 +49,5 @@ OrderItem.propTypes = {
   id: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   data: PropTypes.string.isRequired,
-  totalPrice: PropTypes.number.isRequired,
+  totalPrice: PropTypes.string.isRequired,
 };

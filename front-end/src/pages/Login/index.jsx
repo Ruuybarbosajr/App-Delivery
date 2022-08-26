@@ -15,7 +15,7 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [messageError, setMessageError] = useState(null);
+  const [isError, setIsError] = useState(false);
   const { setUserData } = useContext(UserContext);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -27,8 +27,7 @@ function Login() {
   const submit = async (event) => {
     event.preventDefault();
     try {
-      const port = process.env.REACT_APP_PORT_BACK;
-      const login = await axios.post(`http://localhost:${port}/login`, {
+      const login = await axios.post('http://localhost:3001/login', {
         email,
         password,
       });
@@ -42,7 +41,7 @@ function Login() {
     } catch (error) {
       const { message } = error.response.data;
       enqueueSnackbar(message, { variant: 'error' });
-      setMessageError(message);
+      setIsError(true);
     }
   };
 
@@ -66,14 +65,14 @@ function Login() {
         >
           <div className={ style.container__inputs }>
             <TextField
-              error={ messageError }
+              error={ isError }
               value={ email }
               label="Email"
               type="Error"
               onChange={ (e) => setEmail(e.target.value) }
             />
             <TextField
-              error={ messageError }
+              error={ isError }
               value={ password }
               type="password"
               onChange={ (e) => setPassword(e.target.value) }

@@ -36,3 +36,9 @@ Consulte **Instalação** para saber como implantar o projeto.
 * [Axios](https://axios-http.com/ptbr/docs/intro)
 * [React Icons](https://react-icons.github.io/react-icons/)
 
+## Contribuição de
+
+* [George Lucas](https://www.linkedin.com/in/glalmeida-/)
+* [Thais Luza](https://www.linkedin.com/in/thais-luza-95447a73/)
+* [Gabriel Araujo](https://www.linkedin.com/in/gabriel-araujo11/)
+* [Ruy](https://www.linkedin.com/in/ruybarbosajr/)

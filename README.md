@@ -1,6 +1,4 @@
-# Car-shop
-
-Neste projeto foi desenvolvido uma API com CRUD para gerenciar uma concessionária de veículos, utilizando o banco de dados MongoDB.
+# App-delivery
 
 ## 🚀 Começando
 

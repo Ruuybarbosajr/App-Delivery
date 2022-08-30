@@ -2,7 +2,7 @@
 
 ## 🚀 Começando
 
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
+Plataforma de entregas de bebidas, com diferentes fluxos de acesso. Neste projeto foi desenvolvido o back-end, front-end e o banco de dados. Utilizando padrão REST na API e arquitetura MSC Utilizando Express para construção do servidor. A autenticação do usuário e geração de um token é realizada através do JWT. O banco de dados MySQL foi construído com o auxílio do ORM Sequelize.
 
 Consulte **Instalação** para saber como implantar o projeto.
 

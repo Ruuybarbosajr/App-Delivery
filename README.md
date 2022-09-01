@@ -40,3 +40,7 @@ Consulte **Instalação** para saber como implantar o projeto.
 * [Thais Luza](https://www.linkedin.com/in/thais-luza-95447a73/)
 * [Gabriel Araujo](https://www.linkedin.com/in/gabriel-araujo11/)
 * [Ruy](https://www.linkedin.com/in/ruybarbosajr/)
+
+<div align="center">
+  <img height="500" widht= "600" src="C:\Users\ruy_d\OneDrive\Imagens\Capturas de tela\2022-09-01.png">
+</div>

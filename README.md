@@ -42,5 +42,5 @@ Consulte **Instalação** para saber como implantar o projeto.
 * [Ruy](https://www.linkedin.com/in/ruybarbosajr/)
 
 <div align="center">
-  <img height="500" widht= "600" src="C:\Users\ruy_d\OneDrive\Imagens\Capturas de tela\2022-09-01.png">
+  <img height="500" widht= "600" src="https://user-images.githubusercontent.com/91337493/188001421-7ca2ffcc-dd98-4a6a-a465-6544019daf39.png">
 </div>
